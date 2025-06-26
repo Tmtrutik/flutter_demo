@@ -6,4 +6,10 @@ class AppAssets {
   static String mailSvg = '${svgPath}mail.svg';
   static String lockSvg = '${svgPath}lock.svg';
   static String menuSvg = '${svgPath}menu_icon.svg';
+  static String googleLogo = '${svgPath}googlelogo.svg';
+  static String appleLogo = '${svgPath}applelogo.svg';
+  static String facebookLogo = '${svgPath}facebooklogo.svg';
+
+  //? Images ( static String exampleImage = '${imagesPath}example.png'; )
+  static String loginImage = '${imagesPath}login.png';
 }

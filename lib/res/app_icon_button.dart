@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_demo/utils/utils.dart';
 
 class AppIconButton extends StatelessWidget {
   final Widget icon;
@@ -18,13 +19,18 @@ class AppIconButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: padding,
-      child: IconButton(
-        onPressed: onPressed,
-        icon: icon,
-        color: color,
-        tooltip: tooltip,
+    return GestureDetector(
+      child: Container(
+        decoration: BoxDecoration(
+          color: color,
+          borderRadius: BorderRadius.circular(defaultRadius),
+        ),
+        padding: padding,
+        child: IconButton(
+          onPressed: onPressed,
+          icon: icon,
+          tooltip: tooltip,
+        ),
       ),
     );
   }

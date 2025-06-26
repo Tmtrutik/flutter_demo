@@ -22,6 +22,11 @@ class AppTheme {
         ),
       ),
       iconTheme: IconThemeData(color: AppColors.backgroundgrey),
+      textSelectionTheme: TextSelectionThemeData(
+              selectionColor: AppColors.kPrimaryColor,
+              selectionHandleColor: AppColors.kPrimaryColor,
+              cursorColor: AppColors.kPrimaryColor,
+      )
     );
   }
 
@@ -31,24 +36,24 @@ class AppTheme {
 
     return base.copyWith(
       //* Display
-      displayLarge: TextStyle(fontSize: (57.0.sp - 2.5), letterSpacing: 0.0, fontWeight: FontWeight.w300, color: base.displayLarge!.color, fontFamily: myFontFamily),
-      displayMedium: TextStyle(fontSize: (45.0.sp - 2.5), letterSpacing: 0.0, fontWeight: FontWeight.w300, color: base.displayMedium!.color, fontFamily: myFontFamily),
-      displaySmall: TextStyle(fontSize: (36.0.sp - 2.5), letterSpacing: 0.0, fontWeight: FontWeight.w400, color: base.displaySmall!.color, fontFamily: myFontFamily),
+      displayLarge: TextStyle(fontSize: (57.0.sp - 2.5), letterSpacing: 0.0, fontWeight: FontWeight.w700, color: base.displayLarge!.color, fontFamily: myFontFamily),
+      displayMedium: TextStyle(fontSize: (45.0.sp - 2.5), letterSpacing: 0.0, fontWeight: FontWeight.w700, color: base.displayMedium!.color, fontFamily: myFontFamily),
+      displaySmall: TextStyle(fontSize: (36.0.sp - 2.5), letterSpacing: 0.0, fontWeight: FontWeight.w700, color: base.displaySmall!.color, fontFamily: myFontFamily),
 
       //* Headline
-      headlineLarge: TextStyle(fontSize: (32.0.sp - 2.5), letterSpacing: 0.0, fontWeight: FontWeight.w400, color: base.headlineLarge!.color, fontFamily: myFontFamily),
-      headlineMedium: TextStyle(fontSize: (28.0.sp - 2.5), letterSpacing: 0.0, fontWeight: FontWeight.w400, color: base.headlineMedium!.color, fontFamily: myFontFamily),
+      headlineLarge: TextStyle(fontSize: (32.0.sp - 2.5), letterSpacing: 0.0, fontWeight: FontWeight.w700, color: base.headlineLarge!.color, fontFamily: myFontFamily),
+      headlineMedium: TextStyle(fontSize: (28.0.sp - 2.5), letterSpacing: 0.0, fontWeight: FontWeight.w700, color: base.headlineMedium!.color, fontFamily: myFontFamily),
       headlineSmall: TextStyle(fontSize: (20.0.sp - 2.5), letterSpacing: 0.0, fontWeight: FontWeight.w700, color: base.headlineSmall!.color, fontFamily: myFontFamily),
 
       //* Title
-      titleLarge: TextStyle(fontSize: (22.0.sp - 2.5), letterSpacing: 0.0, fontWeight: FontWeight.w500, color: base.titleLarge!.color, fontFamily: myFontFamily),
-      titleMedium: TextStyle(fontSize: (16.0.sp - 2.5), letterSpacing: 0.15, fontWeight: FontWeight.w400, color: base.titleMedium!.color, fontFamily: myFontFamily),
-      titleSmall: TextStyle(fontSize: (14.0.sp - 2.5), letterSpacing: 0.1, fontWeight: FontWeight.w500, color: base.titleSmall!.color, fontFamily: myFontFamily),
+      titleLarge: TextStyle(fontSize: (22.0.sp - 2.5), letterSpacing: 0.0, fontWeight: FontWeight.w700, color: base.titleLarge!.color, fontFamily: myFontFamily),
+      titleMedium: TextStyle(fontSize: (16.0.sp - 2.5), letterSpacing: 0.15, fontWeight: FontWeight.w700, color: base.titleMedium!.color, fontFamily: myFontFamily),
+      titleSmall: TextStyle(fontSize: (14.0.sp - 2.5), letterSpacing: 0.1, fontWeight: FontWeight.w600, color: base.titleSmall!.color, fontFamily: myFontFamily),
 
       //* Label
       labelLarge: TextStyle(fontSize: (16.0.sp - 2.5), letterSpacing: 0.1, fontWeight: FontWeight.w700, color: base.labelLarge!.color, fontFamily: myFontFamily),
-      labelMedium: TextStyle(fontSize: (12.0.sp - 2.5), letterSpacing: 0.5, fontWeight: FontWeight.w400, color: base.labelMedium!.color, fontFamily: myFontFamily),
-      labelSmall: TextStyle(fontSize: (11.0.sp - 2.5), letterSpacing: 0.5, fontWeight: FontWeight.w400, color: base.labelSmall!.color, fontFamily: myFontFamily),
+      labelMedium: TextStyle(fontSize: (12.0.sp - 2.5), letterSpacing: 0.5, fontWeight: FontWeight.w700, color: base.labelMedium!.color, fontFamily: myFontFamily),
+      labelSmall: TextStyle(fontSize: (11.0.sp - 2.5), letterSpacing: 0.5, fontWeight: FontWeight.w700, color: base.labelSmall!.color, fontFamily: myFontFamily),
 
     );
   }

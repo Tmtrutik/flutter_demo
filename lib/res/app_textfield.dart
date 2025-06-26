@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_demo/res/app_colors.dart';
 import 'package:flutter_demo/utils/utils.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AppTextField extends StatelessWidget {
   final String? hintText;
   final TextStyle? hintStyle;
+  final Color? color;
   final Widget? icon;
   final bool obscureText;
   final TextInputType keyboardType;
@@ -14,6 +14,7 @@ class AppTextField extends StatelessWidget {
   const AppTextField({
     super.key,
     required this.hintText,
+    this.color,
     required this.icon,
     this.hintStyle,
     this.obscureText = false,
@@ -26,7 +27,8 @@ class AppTextField extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: defaultPadding/18),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12.r),
+        color: color,
+        borderRadius: BorderRadius.circular(defaultRadius),
         border: Border.all(
           color: AppColors.hintTextColor,
           width: 1,
@@ -43,7 +45,6 @@ class AppTextField extends StatelessWidget {
               padding: const EdgeInsets.only(left: defaultPadding/1.3),
               child: TextField(
                 keyboardType: TextInputType.text,
-                cursorColor: AppColors.kPrimaryColor,
                 obscureText: obscureText,
                 decoration: InputDecoration(
                   border: InputBorder.none,
