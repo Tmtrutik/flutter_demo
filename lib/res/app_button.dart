@@ -37,7 +37,7 @@ class AppButton extends StatelessWidget {
         text,
         style: Theme.of(
           context,
-        ).textTheme.labelLarge?.copyWith(color: AppColors.textWhiteColor),
+        ).textTheme.labelLarge?.copyWith(color: AppColors.whiteColor),
       ),
     );
   }

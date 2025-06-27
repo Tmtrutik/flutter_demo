@@ -17,13 +17,15 @@ class LoginScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColors.transparentBgColor,
       body: Stack(
+        fit: StackFit.expand,
         children: [
-
+          // Background Image
           Positioned.fill(
-            child: Image.asset(AppAssets.loginImage, fit: BoxFit.contain),
+            child: Image.asset(AppAssets.loginImage, fit: BoxFit.cover),
           ),
 
-          Positioned.fill(child: Container(
+          // Gradient Overlay
+          Container(
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.topCenter,
@@ -31,165 +33,178 @@ class LoginScreen extends StatelessWidget {
                 colors: AppColors.scffoldGradientColorList,
               ),
             ),
-          ),),
+          ),
 
-          Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: defaultPadding / 0.45,
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-
-              children: [
-                Spacer(flex: 15),
-
-                //Title
-                Text(
-                  "Sneakers",
-                  style: Theme.of(context).textTheme.displayMedium?.copyWith(
-                    color: AppColors.textWhiteColor,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-
-                Text(
-                  'Special footwear for everyday use',
-                  style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                    color: AppColors.textWhiteColor,
-                    fontSize: 13.0.sp,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-
-                Spacer(flex: 30),
-
-                //Apptextfield
-                AppTextField(
-                  hintText: 'Email',
-                  color: AppColors.textWhiteColor,
-                  hintStyle: AppTextStyle.textFieldStyle(
-                    context,
-                  )?.copyWith(fontWeight: FontWeight.w300),
-                  icon: SvgPicture.asset(
-                    AppAssets.mailSvg,
-                    colorFilter: ColorFilter.mode(
-                      AppColors.hintTextColor,
-                      BlendMode.srcIn,
-                    ),
-                  ),
-                ),
-
-                18.verticalSpace,
-
-                //apptextfield2
-                AppTextField(
-                  hintText: 'Password',
-                  color: AppColors.textWhiteColor,
-                  obscureText: true,
-                  hintStyle: AppTextStyle.textFieldStyle(
-                    context,
-                  )?.copyWith(fontWeight: FontWeight.w300),
-                  icon: SvgPicture.asset(
-                    AppAssets.lockSvg,
-                    colorFilter: ColorFilter.mode(
-                      AppColors.hintTextColor,
-                      BlendMode.srcIn,
-                    ),
-                  ),
-                ),
-
-                18.verticalSpace,
-
-                //Appbutton
-                AppButton(
-                  text: 'Sign Up',
-                  onPressed: () {},
-                  color: AppColors.kPrimaryColor,
-                  borderRadius: defaultRadius,
-                  textColor: AppColors.textWhiteColor,
-                ),
-
-                30.verticalSpace,
-
-                //Social Media Login buttons
-                Row(
+          // Main Content
+          SingleChildScrollView(
+            child: IntrinsicHeight(
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: defaultPadding/0.5),
+                child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    AppIconButton(
-                      icon: SvgPicture.asset(AppAssets.appleLogo),
-                      onPressed: () {
-                        debugPrint('apple');
-                      },
-                      color: AppColors.textWhiteColor,
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 3.w,
-                        vertical: 3.h,
-                      ),
-                    ),
-                    15.horizontalSpace,
-                    AppIconButton(
-                      icon: SvgPicture.asset(AppAssets.facebookLogo),
-                      onPressed: () {
-                        debugPrint('facebook');
-                      },
-                      color: AppColors.textWhiteColor,
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 3.w,
-                        vertical: 3.h,
-                      ),
-                    ),
-                    15.horizontalSpace,
-                    AppIconButton(
-                      icon: SvgPicture.asset(AppAssets.googleLogo),
-                      onPressed: () {
-                        debugPrint('google');
-                      },
-                      color: AppColors.textWhiteColor,
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 3.w,
-                        vertical: 3.h,
-                      ),
-                    ),
-                  ],
-                ),
-
-                10.verticalSpace,
-
-                //Sign In here text
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'If you have an account?',
-                      style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                        color: AppColors.textWhiteColor,
-                        fontSize: 13.0.sp,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                    TextButton(
-                      onPressed: () {},
-
-                      child: Text(
-                        'Sign In here',
-                        style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                          decoration: TextDecoration.underline,
-                          color: AppColors.kPrimaryColor,
-                          fontSize: 13.0.sp,
-                          fontWeight: FontWeight.w700,
+                    SizedBox(height: 90.h),
+            
+                    // Title
+                    Column(
+                      children: [
+                        Text(
+                          "Sneakers",
+                          style: AppTextStyle.titleStyle(
+                            context,
+                          )?.copyWith(fontSize: 45.0.sp),
                         ),
-                      ),
+                        // SizedBox(height: 0.75.h),
+                        Text(
+                          'Special footwear for everyday use',
+                          style: AppTextStyle.subtitleStyle(
+                            context,
+                          )?.copyWith(fontSize: 14.0.sp),
+                        ),
+                      ],
                     ),
+            
+                    SizedBox(height: 200.h),
+            
+                    // Form Section
+                    _formSection(context),
+            
+                    SizedBox(height: 30.h),
+            
+                    // Social Media Section
+                    _socialMediaSection(),
+            
+                    SizedBox(height: 20.h),
+            
+                    // Sign In Section
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'If you have an account? ',
+                          style: Theme.of(context).textTheme.titleSmall
+                              ?.copyWith(
+                                color: AppColors.whiteColor,
+                                fontSize: 14.0.sp,
+                                fontWeight: FontWeight.w400,
+                              ),
+                        ),
+                        GestureDetector(
+                          onTap: () {},
+                          child: Text(
+                            'Sign In here',
+                            style: Theme.of(context).textTheme.titleSmall
+                                ?.copyWith(
+                                  decoration: TextDecoration.underline,
+                                  decorationColor: AppColors.kPrimaryColor,
+                                  color: AppColors.kPrimaryColor,
+                                  fontSize: 14.0.sp,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                          ),
+                        ),
+                      ],
+                    ),
+            
+                    SizedBox(height: 40.h),
                   ],
                 ),
-
-                Spacer(flex: 3),
-              ],
+              ),
             ),
           ),
         ],
       ),
+    );
+  }
+
+  Widget _formSection(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        // Email TextField
+        AppTextField(
+          hintText: 'Email',
+          color: AppColors.whiteColor,
+          hintStyle: AppTextStyle.textFieldStyle(
+            context,
+          )?.copyWith(fontWeight: FontWeight.w300),
+          icon: SvgPicture.asset(
+            AppAssets.mailSvg,
+            colorFilter: ColorFilter.mode(
+              AppColors.hintTextColor,
+              BlendMode.srcIn,
+            ),
+          ),
+        ),
+
+        SizedBox(height: 18.h),
+
+        // Password TextField
+        AppTextField(
+          hintText: 'Password',
+          color: AppColors.whiteColor,
+          obscureText: true,
+          hintStyle: AppTextStyle.textFieldStyle(
+            context,
+          )?.copyWith(fontWeight: FontWeight.w300),
+          icon: SvgPicture.asset(
+            AppAssets.lockSvg,
+            colorFilter: ColorFilter.mode(
+              AppColors.hintTextColor,
+              BlendMode.srcIn,
+            ),
+          ),
+        ),
+
+        SizedBox(height: 18.h),
+
+        // Sign Up Button
+        AppButton(
+          text: 'Sign Up',
+          onPressed: () {},
+          color: AppColors.kPrimaryColor,
+          borderRadius: defaultRadius,
+          textColor: AppColors.whiteColor,
+        ),
+      ],
+    );
+  }
+
+  Widget _socialMediaSection() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        AppIconButton(
+          icon: SvgPicture.asset(AppAssets.appleLogo),
+          onPressed: () {
+            debugPrint('apple login pressed');
+          },
+          color: AppColors.whiteColor,
+          padding: EdgeInsets.all(defaultPadding/5),
+        ),
+
+        SizedBox(width: 15.w),
+
+        AppIconButton(
+          icon: SvgPicture.asset(AppAssets.facebookLogo),
+          onPressed: () {
+            debugPrint('facebook login pressed');
+          },
+          color: AppColors.whiteColor,
+          padding: EdgeInsets.all(defaultPadding / 5),
+        ),
+
+        SizedBox(width: 15.w),
+
+        AppIconButton(
+          icon: SvgPicture.asset(AppAssets.googleLogo),
+          onPressed: () {
+            debugPrint('google login pressed');
+          },
+          color: AppColors.whiteColor,
+          padding: EdgeInsets.all(defaultPadding / 5),
+        ),
+      ],
     );
   }
 }

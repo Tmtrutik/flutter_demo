@@ -23,9 +23,9 @@ class AppTheme {
       ),
       iconTheme: IconThemeData(color: AppColors.backgroundgrey),
       textSelectionTheme: TextSelectionThemeData(
-              selectionColor: AppColors.kPrimaryColor,
-              selectionHandleColor: AppColors.kPrimaryColor,
-              cursorColor: AppColors.kPrimaryColor,
+        selectionColor: AppColors.kPrimaryColor,
+        selectionHandleColor: AppColors.kPrimaryColor,
+        cursorColor: AppColors.kPrimaryColor,
       )
     );
   }
