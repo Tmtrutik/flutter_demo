@@ -9,6 +9,8 @@ class AppButton extends StatelessWidget {
   final Color? textColor;
   final double? borderRadius;
   final EdgeInsetsGeometry? padding;
+  final double? width;
+  final double? height;
 
   const AppButton({
     super.key,
@@ -18,26 +20,32 @@ class AppButton extends StatelessWidget {
     this.textColor,
     this.borderRadius,
     this.padding,
+    this.width,
+    this.height,
   });
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: onPressed,
-      style: ElevatedButton.styleFrom(
-        padding: EdgeInsets.all(defaultPadding / 1),
-        backgroundColor: color,
-        foregroundColor: textColor,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(defaultRadius),
+    return SizedBox(
+      width: width,
+      height: height,
+      child: ElevatedButton(
+        onPressed: onPressed,
+        style: ElevatedButton.styleFrom(
+          padding: EdgeInsets.all(defaultPadding),
+          backgroundColor: color,
+          foregroundColor: textColor,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(defaultRadius),
+          ),
+          elevation: 0,
         ),
-        elevation: 0,
-      ),
-      child: Text(
-        text,
-        style: Theme.of(
-          context,
-        ).textTheme.labelLarge?.copyWith(color: AppColors.whiteColor),
+        child: Text(
+          text,
+          style: Theme.of(
+            context,
+          ).textTheme.labelLarge?.copyWith(color: AppColors.whiteColor),
+        ),
       ),
     );
   }

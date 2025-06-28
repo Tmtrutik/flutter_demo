@@ -10,6 +10,7 @@ class AppTextField extends StatelessWidget {
   final bool obscureText;
   final TextInputType keyboardType;
   final TextEditingController? controller;
+  final Widget? suffixIcon;
 
   const AppTextField({
     super.key,
@@ -20,19 +21,17 @@ class AppTextField extends StatelessWidget {
     this.obscureText = false,
     this.keyboardType = TextInputType.text,
     this.controller,
+    this.suffixIcon,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: defaultPadding/18),
+      padding: const EdgeInsets.symmetric(vertical: defaultPadding / 16),
       decoration: BoxDecoration(
         color: color,
         borderRadius: BorderRadius.circular(defaultRadius),
-        border: Border.all(
-          color: AppColors.hintTextColor,
-          width: 1,
-        )
+        border: Border.all(color: AppColors.hintTextColor, width: 1),
       ),
       child: Row(
         children: [
@@ -42,7 +41,7 @@ class AppTextField extends StatelessWidget {
           ),
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.only(left: defaultPadding/1.3),
+              padding: const EdgeInsets.only(left: defaultPadding / 1.3),
               child: TextField(
                 keyboardType: TextInputType.text,
                 obscureText: obscureText,
@@ -54,6 +53,11 @@ class AppTextField extends StatelessWidget {
               ),
             ),
           ),
+
+          Padding(
+            padding: const EdgeInsets.only(right: defaultPadding / 2),
+            child: suffixIcon,
+          )
         ],
       ),
     );

@@ -5,6 +5,7 @@ class AppIconButton extends StatelessWidget {
   final Widget icon;
   final VoidCallback onPressed;
   final EdgeInsets? padding;
+  final BorderRadius? borderRadius;
   final Color? color;
   final String? tooltip;
 
@@ -13,6 +14,7 @@ class AppIconButton extends StatelessWidget {
     required this.icon,
     required this.onPressed,
     this.padding,
+    this.borderRadius,
     this.color,
     this.tooltip,
   });
@@ -23,7 +25,7 @@ class AppIconButton extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           color: color,
-          borderRadius: BorderRadius.circular(defaultRadius),
+          borderRadius: borderRadius ?? BorderRadius.circular(defaultRadius),
         ),
         padding: padding,
         child: IconButton(

@@ -30,8 +30,6 @@ class AppTheme {
     );
   }
 
-
-
   static TextTheme buildTextTheme({required TextTheme base, String? myFontFamily}) {
 
     return base.copyWith(
