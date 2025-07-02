@@ -5,7 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AppTheme {
   static String myFontFamily = 'Montserrat';
-  static String fontFamilyDmsans = 'DM Sans';
+  static String fontFamilyDmsans = 'DMSans';
 
   static ThemeData lightMode(BuildContext context, {Color? kPrimaryColor, Color? kBackgroundColor, String? fontFamily}) {
     final ThemeData base = ThemeData.light();

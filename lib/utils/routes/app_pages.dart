@@ -1,6 +1,6 @@
 import 'package:flutter_demo/utils/routes/app_routes.dart';
-import 'package:flutter_demo/views/home_screen.dart';
-import 'package:flutter_demo/views/login_screen.dart';
+import 'package:flutter_demo/views/home/home_screen.dart';
+import 'package:flutter_demo/views/auth/login_screen.dart';
 import 'package:get/get.dart';
 
 class AppPages {
