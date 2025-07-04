@@ -40,6 +40,7 @@ class FeatureCard extends StatelessWidget {
                     ),
                     SizedBox(height: 10.h),
                     Row(
+                      mainAxisSize: MainAxisSize.min,
                       children: [
                         GestureDetector(
                           onTap: (){debugPrint('Shop now');},

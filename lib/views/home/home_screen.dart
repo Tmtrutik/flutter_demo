@@ -5,6 +5,7 @@ import 'package:flutter_demo/res/app_textfield.dart';
 import 'package:flutter_demo/res/app_theme.dart';
 import 'package:flutter_demo/utils/app_assets.dart';
 import 'package:flutter_demo/utils/app_textstyle.dart';
+import 'package:flutter_demo/utils/routes/app_routes.dart';
 import 'package:flutter_demo/utils/utils.dart';
 import 'package:flutter_demo/views/home/components/feature_card.dart';
 import 'package:flutter_demo/views/home/home_controller.dart';
@@ -24,6 +25,7 @@ class HomeScreen extends StatelessWidget {
       () => Scaffold(
         // App Bar
         appBar: AppBar(
+          scrolledUnderElevation: 0,
           automaticallyImplyLeading: false,
 
           // leading
@@ -55,51 +57,50 @@ class HomeScreen extends StatelessWidget {
         ),
 
         // Main Body
-        body: Column(
-          children: [
-            // Header
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(height: 10.h),
-                  Text(
-                    'Hello, Funke',
-                    style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 15.sp,
-                      color: AppColors.blackColor,
+        body: CustomScrollView(
+          slivers: [
+            SliverToBoxAdapter(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(height: 10.h),
+                    Text(
+                      'Hello, Funke',
+                      style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 15.sp,
+                        color: AppColors.blackColor,
+                      ),
                     ),
-                  ),
-                  SizedBox(height: 3.h),
-                  Text(
-                    'What are you looking for today?',
-                    style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                      fontWeight: FontWeight.w700,
-                      fontSize: 22.sp,
-                      color: AppColors.blackColor,
+                    SizedBox(height: 3.h),
+                    Text(
+                      'What are you looking for today?',
+                      style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                        fontWeight: FontWeight.w700,
+                        fontSize: 22.sp,
+                        color: AppColors.blackColor,
+                      ),
                     ),
-                  ),
-                  SizedBox(height: 20.h),
-                  AppTextField(
-                    hintText: 'Search sneakers',
-                    hintStyle: AppTextStyle.textFieldStyle(context)?.copyWith(
-                      fontWeight: FontWeight.w300,
-                      fontSize: 13.sp,
-                      color: AppColors.hintTextColor,
+                    SizedBox(height: 20.h),
+                    AppTextField(
+                      hintText: 'Search sneakers',
+                      hintStyle: AppTextStyle.textFieldStyle(context)?.copyWith(
+                        fontWeight: FontWeight.w300,
+                        fontSize: 13.sp,
+                        color: AppColors.hintTextColor,
+                      ),
+                      icon: SvgPicture.asset(AppAssets.searchSvg),
+                      suffixIcon: SvgPicture.asset(AppAssets.micSvg),
                     ),
-                    icon: SvgPicture.asset(AppAssets.searchSvg),
-                    suffixIcon: SvgPicture.asset(AppAssets.micSvg),
-                  ),
 
-                  20.verticalSpace,
-                ],
+                    20.verticalSpace,
+                  ],
+                ),
               ),
             ),
-
-            // Background container
-            Expanded(
+            SliverToBoxAdapter(
               child: Container(
                 decoration: BoxDecoration(
                   color: AppColors.backgroundgrey,
@@ -114,7 +115,7 @@ class HomeScreen extends StatelessWidget {
                   child: Column(
                     children: [
                       25.verticalSpace,
-
+              
                       SizedBox(
                         height: 25.h,
                         child: ListView.separated(
@@ -162,9 +163,9 @@ class HomeScreen extends StatelessWidget {
                           },
                         ),
                       ),
-
+              
                       18.verticalSpace,
-
+              
                       SizedBox(
                         height: 160.h,
                         child: ListView.separated(
@@ -175,13 +176,16 @@ class HomeScreen extends StatelessWidget {
                           itemBuilder: (context, index) {
                             return ProductCard(
                               product: con.featuredProducts[index],
+                              onTap: () {
+                                Get.toNamed(AppRoutes.cartScreen);
+                              },
                             );
                           },
                         ),
                       ),
-
+              
                       15.verticalSpace,
-
+              
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -205,9 +209,9 @@ class HomeScreen extends StatelessWidget {
                           ),
                         ],
                       ),
-
+              
                       15.verticalSpace,
-
+              
                       SingleChildScrollView(
                         scrollDirection: Axis.horizontal,
                         child: Row(
@@ -217,9 +221,9 @@ class HomeScreen extends StatelessWidget {
                               width: 280.w,
                               child: FeatureCard(),
                             ),
-                        
+              
                             15.horizontalSpace,
-                        
+              
                             SizedBox(
                               height: 140.h,
                               width: 280.w,
@@ -228,8 +232,8 @@ class HomeScreen extends StatelessWidget {
                           ],
                         ),
                       ),
-
-                      15.verticalSpace,
+              
+                      25.verticalSpace,
                     ],
                   ),
                 ),

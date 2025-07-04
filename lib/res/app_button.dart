@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_demo/res/app_colors.dart';
 import 'package:flutter_demo/utils/utils.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AppButton extends StatelessWidget {
   final String text;
@@ -11,7 +12,8 @@ class AppButton extends StatelessWidget {
   final EdgeInsetsGeometry? padding;
   final double? width;
   final double? height;
-
+  final Widget? icon;
+  final MainAxisAlignment? mainAxisAlignment;
   const AppButton({
     super.key,
     required this.text,
@@ -22,6 +24,8 @@ class AppButton extends StatelessWidget {
     this.padding,
     this.width,
     this.height,
+    this.icon,
+    this.mainAxisAlignment,
   });
 
   @override
@@ -40,11 +44,22 @@ class AppButton extends StatelessWidget {
           ),
           elevation: 0,
         ),
-        child: Text(
-          text,
-          style: Theme.of(
-            context,
-          ).textTheme.labelLarge?.copyWith(color: AppColors.whiteColor),
+        child: Row(
+          mainAxisAlignment: mainAxisAlignment ?? MainAxisAlignment.center,
+          children: [
+            Text(
+              text,
+              style: Theme.of(
+                context,
+              ).textTheme.labelLarge?.copyWith(color: AppColors.whiteColor),
+            ),
+            if (icon != null)
+              SizedBox(
+                width: 20.w,
+                height: 20.h,
+                child: icon,
+              ),
+          ],
         ),
       ),
     );

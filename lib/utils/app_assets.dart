@@ -13,6 +13,12 @@ class AppAssets {
   static String micSvg = '${svgPath}mic.svg';
   static String starSvg = '${svgPath}starsvg.svg';
   static String arrowSvg = '${svgPath}arrow-right.svg';
+  static String backarrowSvg = '${svgPath}backarrow.svg';
+  static String trashSvg = '${svgPath}trash.svg';
+  static String moreSvg = '${svgPath}moreicon.svg';
+  static String psymbolSvg = '${svgPath}plussym.svg';
+  static String msymbolSvg = '${svgPath}minussyb.svg';
+  static String rightarrowSvg = '${svgPath}rightarrow.svg';
 
   //? Images ( static String exampleImage = '${imagesPath}example.png'; )
   static String loginImage = '${imagesPath}login.png';
@@ -23,4 +29,7 @@ class AppAssets {
   static String sneakers1Jpg = '${imagesPath}sneakers1.jpg';
   static String sneakers2Jpg = '${imagesPath}sneakers2.jpg';
   static String sneakers3Jpg = '${imagesPath}sneakers3.jpg';
+  static String productshoes1Jpg = '${imagesPath}productshoes1.jpg';
+  static String productshoes2Jpg = '${imagesPath}productshoes2.jpg';
+  static String productshoes3Jpg = '${imagesPath}productshoes3.jpg';
 }

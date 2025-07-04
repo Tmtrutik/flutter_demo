@@ -20,7 +20,7 @@ class AppColors {
   static Color hintTextColor = const Color(0xFFBABABA);
 
   static List<Color> scffoldGradientColorList = [
-    const Color(0xFF038D58).withAlpha(170),
-    const Color(0xFF000000).withAlpha(255),
+     Color(0xFF038D58).withAlpha(170),
+     Color(0xFF000000).withAlpha(255),
   ];
 }

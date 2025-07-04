@@ -7,10 +7,12 @@ class AppTextField extends StatelessWidget {
   final TextStyle? hintStyle;
   final Color? color;
   final Widget? icon;
-  final bool obscureText;
-  final TextInputType keyboardType;
+  final bool? obscureText;
+  final TextInputType? keyboardType;
   final TextEditingController? controller;
   final Widget? suffixIcon;
+  final String? Function(String?)? validator;
+  final ValueChanged<String>? onChanged;
 
   const AppTextField({
     super.key,
@@ -18,10 +20,12 @@ class AppTextField extends StatelessWidget {
     this.color,
     required this.icon,
     this.hintStyle,
-    this.obscureText = false,
-    this.keyboardType = TextInputType.text,
+    this.obscureText,
+    this.keyboardType,
     this.controller,
     this.suffixIcon,
+    this.validator,
+    this.onChanged,
   });
 
   @override
@@ -42,9 +46,12 @@ class AppTextField extends StatelessWidget {
           Expanded(
             child: Padding(
               padding: const EdgeInsets.only(left: defaultPadding / 1.3),
-              child: TextField(
-                keyboardType: TextInputType.text,
-                obscureText: obscureText,
+              child: TextFormField(
+                controller: controller,
+                keyboardType: keyboardType,
+                obscureText: obscureText ?? false,
+                validator: validator,
+                onChanged: onChanged,
                 decoration: InputDecoration(
                   border: InputBorder.none,
                   hintText: hintText,
