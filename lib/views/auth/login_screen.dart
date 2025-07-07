@@ -14,9 +14,9 @@ import 'package:get/get.dart';
 import 'login_controller.dart';
 
 class LoginScreen extends StatelessWidget {
-  final LoginController controller = Get.put(LoginController());
-
   LoginScreen({super.key});
+
+  final LoginController controller = Get.put(LoginController());
 
   @override
   Widget build(BuildContext context) {
@@ -102,7 +102,7 @@ class LoginScreen extends StatelessWidget {
                                   controller.emailError.value,
                                   style: AppTextStyle.textFieldStyle(context)
                                       ?.copyWith(
-                                        color: Colors.red,
+                                        color: AppColors.redColor,
                                         fontSize: 10.sp,
                                         fontWeight: FontWeight.w400,
                                       ),
@@ -141,7 +141,7 @@ class LoginScreen extends StatelessWidget {
                                   controller.passwordError.value,
                                   style: AppTextStyle.textFieldStyle(context)
                                       ?.copyWith(
-                                        color: Colors.red,
+                                        color: AppColors.redColor,
                                         fontSize: 10.sp,
                                         fontWeight: FontWeight.w400,
                                       ),
@@ -226,7 +226,9 @@ class LoginScreen extends StatelessWidget {
                         ),
                       ),
                       GestureDetector(
-                        onTap: () {},
+                        onTap: () {
+                          printWhite('sign in here pressed');
+                        },
                         child: Text(
                           'Sign In here',
                           style: Theme.of(context).textTheme.titleSmall

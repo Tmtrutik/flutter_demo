@@ -15,6 +15,7 @@ class AppColors {
   static Color blackColor = const Color(0xFF000000);
   static Color whiteColor = const Color(0xFFFFFFFF);
   static Color greyColor = const Color(0xFF7F7F7F);
+  static Color redColor = Colors.red;
 
   //font colors
   static Color hintTextColor = const Color(0xFFBABABA);

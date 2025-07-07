@@ -3,13 +3,10 @@ import 'package:flutter_demo/res/app_colors.dart';
 import 'package:flutter_demo/res/app_theme.dart';
 import 'package:flutter_demo/utils/app_assets.dart';
 import 'package:flutter_demo/utils/utils.dart';
-import 'package:flutter_demo/views/cart/cart_controller.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:get/get.dart';
 
 class ProductTile extends StatelessWidget {
-  final CartController cartcon = Get.find<CartController>();
   final String title;
   final int price;
   final double rating;
@@ -20,7 +17,7 @@ class ProductTile extends StatelessWidget {
   final VoidCallback onDecrement;
   final VoidCallback onRemove;
 
-  ProductTile({
+  const ProductTile({
     super.key,
     required this.title,
     required this.price,
@@ -89,14 +86,17 @@ class ProductTile extends StatelessWidget {
                         SizedBox(
                           width: 20.w,
                           height: 20.h,
-                          child: Text(
-                            quantity.toString(),
-                            textAlign: TextAlign.center,
-                            style: Theme.of(context).textTheme.titleMedium
-                                ?.copyWith(
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: 14.sp,
-                                ),
+                          child: FittedBox(
+                            fit: BoxFit.scaleDown,
+                            child: Text(
+                              quantity.toString(),
+                              textAlign: TextAlign.center,
+                              style: Theme.of(context).textTheme.titleMedium
+                                  ?.copyWith(
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 14.sp,
+                                  ),
+                            ),
                           ),
                         ),
                         10.horizontalSpace,

@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 
 class CartController extends GetxController {
   final RxInt quantity = 1.obs;
+  final RxBool isCartEmpty = false.obs;
   final RxList<Map<String, dynamic>> cartItems = <Map<String, dynamic>>[
     {
       'image': 'assets/images/productshoes1.jpg',
@@ -32,19 +33,19 @@ class CartController extends GetxController {
     },
   ].obs;
 
-  void increment() {
-    quantity.value++;
-
+  @override
+  void onInit() {
+    super.onInit();
+    updateCartEmptyState();
   }
 
-  void decrement() {
-    if (quantity.value > 1) {
-      quantity.value--;
-    }
+  void updateCartEmptyState() {
+    isCartEmpty.value = cartItems.isEmpty;
   }
 
   void clearCart() {
     cartItems.clear();
+    updateCartEmptyState();
   }
 
   void incrementQuantity(int index) {
@@ -56,12 +57,17 @@ class CartController extends GetxController {
     if ((cartItems[index]['quantity'] as int) > 1) {
       cartItems[index]['quantity'] = (cartItems[index]['quantity'] as int) - 1;
       cartItems.refresh();
-    } 
+    }
   }
 
   void removeItem(int index) {
     cartItems.removeAt(index);
+    updateCartEmptyState();
   }
 
-  int get totalPrice => cartItems.fold(0, (sum, item) => sum + (item['unitPrice'] as int) * (item['quantity'] as int));
+  int get totalPrice => cartItems.fold(
+    0,
+    (sum, items) =>
+        sum + (items['unitPrice'] as int) * (items['quantity'] as int),
+  );
 }

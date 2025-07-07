@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_demo/res/app_colors.dart';
 import 'package:flutter_demo/utils/app_assets.dart';
+import 'package:flutter_demo/utils/color_print.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
 class FeatureCard extends StatelessWidget {
-  const FeatureCard({
-    super.key,
-  });
+  const FeatureCard({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -26,10 +25,8 @@ class FeatureCard extends StatelessWidget {
               children: [
                 // Text content
                 Column(
-                  mainAxisAlignment:
-                      MainAxisAlignment.center,
-                  crossAxisAlignment:
-                      CrossAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     Text(
                       'Converse\nAll-Stars\nVibes',
@@ -39,23 +36,26 @@ class FeatureCard extends StatelessWidget {
                       textAlign: TextAlign.end,
                     ),
                     SizedBox(height: 10.h),
-                    Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        GestureDetector(
-                          onTap: (){debugPrint('Shop now');},
-                          child: Text(
+                    GestureDetector(
+                      onTap: () {
+                        printWhite('Shop now');
+                      },
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
                             'Shop now',
-                            style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                              fontWeight: FontWeight.w700,
-                              color: AppColors.kPrimaryColor,
-                            ),
+                            style: Theme.of(context).textTheme.titleSmall
+                                ?.copyWith(
+                                  fontWeight: FontWeight.w700,
+                                  color: AppColors.kPrimaryColor,
+                                ),
                             textAlign: TextAlign.end,
                           ),
-                        ),
-                        4.horizontalSpace,
-                        SvgPicture.asset(AppAssets.arrowSvg),
-                      ],
+                          4.horizontalSpace,
+                          SvgPicture.asset(AppAssets.arrowSvg),
+                        ],
+                      ),
                     ),
                   ],
                 ),
@@ -63,7 +63,7 @@ class FeatureCard extends StatelessWidget {
             ),
           ),
         ),
-    
+
         //Image
         Positioned(
           left: -20.w,
@@ -71,10 +71,7 @@ class FeatureCard extends StatelessWidget {
           child: SizedBox(
             width: 300.w,
             height: 300.h,
-            child: Image.asset(
-              AppAssets.fsneakers,
-              fit: BoxFit.contain,
-            ),
+            child: Image.asset(AppAssets.fsneakers, fit: BoxFit.contain),
           ),
         ),
       ],

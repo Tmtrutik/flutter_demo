@@ -12,8 +12,9 @@ import 'package:get/get.dart';
 import 'package:flutter_demo/views/cart/components/confirm_clear_dialog.dart';
 
 class CartScreen extends StatelessWidget {
-  final CartController con = Get.put(CartController());
   CartScreen({super.key});
+
+  final CartController con = Get.put(CartController());
 
   @override
   Widget build(BuildContext context) {
@@ -42,22 +43,26 @@ class CartScreen extends StatelessWidget {
 
         // actions
         actions: [
-          AppIconButton(
-            icon: SvgPicture.asset(AppAssets.trashSvg),
-            onPressed: () {
-              showDialog(
-                context: context,
-                builder: (context) => ConfirmClearDialog(
-                  onConfirm: () {
-                    Get.back();
-                    con.clearCart();
-                  },
-                  onCancel: () {
-                    Get.back();
-                  },
-                ),
-              );
-            },
+          Obx(
+            () => con.isCartEmpty.value
+                ? SizedBox.shrink()
+                : AppIconButton(
+                    icon: SvgPicture.asset(AppAssets.trashSvg),
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) => ConfirmClearDialog(
+                          onConfirm: () {
+                            Get.back();
+                            con.clearCart();
+                          },
+                          onCancel: () {
+                            Get.back();
+                          },
+                        ),
+                      );
+                    },
+                  ),
           ),
         ],
       ),
@@ -99,60 +104,60 @@ class CartScreen extends StatelessWidget {
               ),
             ),
           ),
-          Obx(()=>
-          Container(
-            decoration: BoxDecoration(
-              color: AppColors.backgroundgrey,
-              borderRadius: BorderRadius.vertical(top: Radius.circular(30.r)),
-            ),
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: defaultPadding),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  30.verticalSpace,
-                  Row(
-                    children: [
-                      24.horizontalSpace,
-                      Text(
-                        'Total: ${con.cartItems.fold(0, (sum, item) => sum + (item['quantity'] as int))} items',
-                        style: Theme.of(context).textTheme.titleSmall
-                            ?.copyWith(
-                              fontWeight: FontWeight.w700,
-                              fontSize: 12.sp,
-                              color: AppColors.greyColor,
-                            ),
-                      ),
-                      Spacer(),
-                      Text(
-                        'USD ${con.totalPrice.toString()}',
-                        style: Theme.of(context).textTheme.titleSmall
-                            ?.copyWith(
-                              fontWeight: FontWeight.w700,
-                              fontSize: 16.sp,
-                            ),
-                      ),
-                    ],
-                  ),
-                  15.verticalSpace,
-                  AppButton(
-                    text: 'Proceed to Checkout',
-                    icon: SvgPicture.asset(
-                      AppAssets.rightarrowSvg,
-                      colorFilter: ColorFilter.mode(
-                        AppColors.whiteColor,
-                        BlendMode.srcIn,
-                      ),
+          Obx(
+            () => Container(
+              decoration: BoxDecoration(
+                color: AppColors.backgroundgrey,
+                borderRadius: BorderRadius.vertical(top: Radius.circular(30.r)),
+              ),
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: defaultPadding),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    30.verticalSpace,
+                    Row(
+                      children: [
+                        24.horizontalSpace,
+                        Text(
+                          'Total: ${con.cartItems.fold(0, (sum, item) => sum + (item['quantity'] as int))} items',
+                          style: Theme.of(context).textTheme.titleSmall
+                              ?.copyWith(
+                                fontWeight: FontWeight.w700,
+                                fontSize: 12.sp,
+                                color: AppColors.greyColor,
+                              ),
+                        ),
+                        Spacer(),
+                        Text(
+                          'USD ${con.totalPrice.toString()}',
+                          style: Theme.of(context).textTheme.titleSmall
+                              ?.copyWith(
+                                fontWeight: FontWeight.w700,
+                                fontSize: 16.sp,
+                              ),
+                        ),
+                      ],
                     ),
-                    width: Get.width,
-                    onPressed: () {},
-                    color: AppColors.kPrimaryColor,
-                    borderRadius: defaultRadius,
-                    textColor: AppColors.whiteColor,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  ),
-                  20.verticalSpace,
-                ],
+                    15.verticalSpace,
+                    AppButton(
+                      text: 'Proceed to Checkout',
+                      icon: SvgPicture.asset(
+                        AppAssets.rightarrowSvg,
+                        colorFilter: ColorFilter.mode(
+                          AppColors.whiteColor,
+                          BlendMode.srcIn,
+                        ),
+                      ),
+                      width: Get.width,
+                      onPressed: () {},
+                      color: AppColors.kPrimaryColor,
+                      borderRadius: defaultRadius,
+                      textColor: AppColors.whiteColor,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    ),
+                    20.verticalSpace,
+                  ],
                 ),
               ),
             ),
