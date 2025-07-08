@@ -8,8 +8,8 @@ import 'package:flutter_demo/utils/app_textstyle.dart';
 import 'package:flutter_demo/utils/routes/app_routes.dart';
 import 'package:flutter_demo/utils/utils.dart';
 import 'package:flutter_demo/views/home/components/feature_card.dart';
-import 'package:flutter_demo/views/home/home_controller.dart';
 import 'package:flutter_demo/views/home/components/product_card.dart';
+import 'package:flutter_demo/views/home/home_controller.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -41,9 +41,9 @@ class HomeScreen extends StatelessWidget {
           title: Text(
             'Sneakers',
             style: Theme.of(context).textTheme.titleSmall?.copyWith(
-              fontWeight: FontWeight.w700,
-              fontSize: 19.sp,
-            ),
+                  fontWeight: FontWeight.w700,
+                  fontSize: 19.sp,
+                ),
           ),
           centerTitle: true,
 
@@ -58,6 +58,7 @@ class HomeScreen extends StatelessWidget {
 
         // Main Body
         body: CustomScrollView(
+          physics: RangeMaintainingScrollPhysics(),
           slivers: [
             SliverToBoxAdapter(
               child: Padding(
@@ -69,19 +70,19 @@ class HomeScreen extends StatelessWidget {
                     Text(
                       'Hello, Funke',
                       style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 15.sp,
-                        color: AppColors.blackColor,
-                      ),
+                            fontWeight: FontWeight.w500,
+                            fontSize: 15.sp,
+                            color: AppColors.blackColor,
+                          ),
                     ),
                     SizedBox(height: 3.h),
                     Text(
                       'What are you looking for today?',
                       style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                        fontWeight: FontWeight.w700,
-                        fontSize: 22.sp,
-                        color: AppColors.blackColor,
-                      ),
+                            fontWeight: FontWeight.w700,
+                            fontSize: 22.sp,
+                            color: AppColors.blackColor,
+                          ),
                     ),
                     SizedBox(height: 20.h),
                     AppTextField(
@@ -94,7 +95,6 @@ class HomeScreen extends StatelessWidget {
                       icon: SvgPicture.asset(AppAssets.searchSvg),
                       suffixIcon: SvgPicture.asset(AppAssets.micSvg),
                     ),
-
                     20.verticalSpace,
                   ],
                 ),
@@ -115,13 +115,11 @@ class HomeScreen extends StatelessWidget {
                   child: Column(
                     children: [
                       25.verticalSpace,
-              
                       SizedBox(
                         height: 25.h,
                         child: ListView.separated(
                           scrollDirection: Axis.horizontal,
-                          separatorBuilder: (context, index) =>
-                              6.horizontalSpace,
+                          separatorBuilder: (context, index) => 6.horizontalSpace,
                           itemCount: con.brands.length,
                           itemBuilder: (context, index) {
                             String category = con.brands[index];
@@ -133,27 +131,17 @@ class HomeScreen extends StatelessWidget {
                                     horizontal: 15.w,
                                   ),
                                   decoration: BoxDecoration(
-                                    color: con.selectedBrand.value == category
-                                        ? AppColors.kPrimaryColor
-                                        : AppColors.backgroundgrey,
+                                    color: con.selectedBrand.value == category ? AppColors.kPrimaryColor : AppColors.backgroundgrey,
                                     borderRadius: BorderRadius.circular(30.r),
                                   ),
                                   child: Center(
                                     child: Text(
                                       category,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .titleSmall
-                                          ?.copyWith(
+                                      style: Theme.of(context).textTheme.titleSmall?.copyWith(
                                             fontWeight: FontWeight.w400,
                                             fontSize: 14.sp,
-                                            fontFamily:
-                                                AppTheme.fontFamilyDmsans,
-                                            color:
-                                                con.selectedBrand.value ==
-                                                    category
-                                                ? AppColors.whiteColor
-                                                : AppColors.greyColor,
+                                            fontFamily: AppTheme.fontFamilyDmsans,
+                                            color: con.selectedBrand.value == category ? AppColors.whiteColor : AppColors.greyColor,
                                           ),
                                     ),
                                   ),
@@ -163,15 +151,12 @@ class HomeScreen extends StatelessWidget {
                           },
                         ),
                       ),
-              
                       18.verticalSpace,
-              
                       SizedBox(
                         height: 160.h,
                         child: ListView.separated(
                           scrollDirection: Axis.horizontal,
-                          separatorBuilder: (context, index) =>
-                              15.horizontalSpace,
+                          separatorBuilder: (context, index) => 15.horizontalSpace,
                           itemCount: con.featuredProducts.length,
                           itemBuilder: (context, index) {
                             return ProductCard(
@@ -183,16 +168,13 @@ class HomeScreen extends StatelessWidget {
                           },
                         ),
                       ),
-              
                       15.verticalSpace,
-              
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
                             'Featured Products',
-                            style: Theme.of(context).textTheme.titleSmall
-                                ?.copyWith(
+                            style: Theme.of(context).textTheme.titleSmall?.copyWith(
                                   fontWeight: FontWeight.w500,
                                   fontSize: 15.sp,
                                   color: AppColors.blackColor,
@@ -200,8 +182,7 @@ class HomeScreen extends StatelessWidget {
                           ),
                           Text(
                             'See All',
-                            style: Theme.of(context).textTheme.titleSmall
-                                ?.copyWith(
+                            style: Theme.of(context).textTheme.titleSmall?.copyWith(
                                   fontWeight: FontWeight.w400,
                                   fontSize: 14.sp,
                                   color: AppColors.hintTextColor,
@@ -209,9 +190,7 @@ class HomeScreen extends StatelessWidget {
                           ),
                         ],
                       ),
-              
                       15.verticalSpace,
-              
                       SingleChildScrollView(
                         scrollDirection: Axis.horizontal,
                         child: Row(
@@ -221,9 +200,7 @@ class HomeScreen extends StatelessWidget {
                               width: 280.w,
                               child: FeatureCard(),
                             ),
-              
                             15.horizontalSpace,
-              
                             SizedBox(
                               height: 140.h,
                               width: 280.w,
@@ -232,7 +209,6 @@ class HomeScreen extends StatelessWidget {
                           ],
                         ),
                       ),
-              
                       25.verticalSpace,
                     ],
                   ),
