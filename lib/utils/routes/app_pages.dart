@@ -2,6 +2,7 @@ import 'package:flutter_demo/utils/routes/app_routes.dart';
 import 'package:flutter_demo/views/cart/cart_screen.dart';
 import 'package:flutter_demo/views/home/home_screen.dart';
 import 'package:flutter_demo/views/auth/login_screen.dart';
+import 'package:flutter_demo/views/payment/checkout_screen.dart';
 import 'package:get/get.dart';
 
 class AppPages {
@@ -11,6 +12,7 @@ class AppPages {
     GetPage(name: AppRoutes.homeScreen, page: ()=> HomeScreen()),
     GetPage(name: AppRoutes.loginScreen, page: ()=> LoginScreen()),
     GetPage(name: AppRoutes.cartScreen, page: ()=> CartScreen()),
+    GetPage(name: AppRoutes.checkoutScreen, page: ()=> CheckoutScreen()),
 
   ];
 }

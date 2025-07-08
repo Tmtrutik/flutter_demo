@@ -19,10 +19,15 @@ class AppAssets {
   static String psymbolSvg = '${svgPath}plussym.svg';
   static String msymbolSvg = '${svgPath}minussyb.svg';
   static String rightarrowSvg = '${svgPath}rightarrow.svg';
+  static String homeSvg = '${svgPath}home.svg';
 
   //? Images ( static String exampleImage = '${imagesPath}example.png'; )
   static String loginImage = '${imagesPath}login.png';
   static String fsneakers = '${imagesPath}featuresneakers.png';
+  static String cardPng = '${imagesPath}card.png';
+  static String paypalPng = '${imagesPath}paypal.png';
+  static String applepayPng = '${imagesPath}applepay.png';
+  static String mastercardPng = '${imagesPath}mastercard.png';
 
   //? JPG ( static String exampleJpg = '${jpgPath}example.jpg'; )
   static String profileJpg = '${imagesPath}profilepic.jpg';

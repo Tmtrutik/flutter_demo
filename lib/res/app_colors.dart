@@ -9,6 +9,7 @@ class AppColors {
   // background colors
   static Color backgroundLight = const Color(0xFFFFFFFF);
   static Color backgroundgrey = const Color(0xFFF6F6F6);
+  static Color tfbgcolor = const Color(0xFFEEF1F4);
   static Color transparentBgColor = Colors.transparent;
 
   //Neutral colors

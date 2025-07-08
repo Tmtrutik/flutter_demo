@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_demo/res/app_colors.dart';
 import 'package:flutter_demo/utils/utils.dart';
 
@@ -18,7 +19,7 @@ class AppTextField extends StatelessWidget {
     super.key,
     required this.hintText,
     this.color,
-    required this.icon,
+    this.icon,
     this.hintStyle,
     this.obscureText,
     this.keyboardType,
@@ -63,10 +64,55 @@ class AppTextField extends StatelessWidget {
 
           Padding(
             padding: const EdgeInsets.only(right: defaultPadding / 2),
-            child: suffixIcon,
-          )
+            child: Container(child: suffixIcon),
+          ),
         ],
       ),
     );
   }
 }
+
+class CardNumberInputFormatter extends TextInputFormatter {
+  @override
+  TextEditingValue formatEditUpdate(
+    TextEditingValue oldValue,
+    TextEditingValue newValue,
+  ) {
+    String digitsOnly = newValue.text.replaceAll(RegExp(r'\D'), '');
+    String newString = '';
+    for (int i = 0; i < digitsOnly.length; i++) {
+      if (i != 0 && i % 4 == 0) {
+        newString += ' ';
+      }
+      newString += digitsOnly[i];
+    }
+    return TextEditingValue(
+      text: newString,
+      selection: TextSelection.collapsed(offset: newString.length),
+    );
+  }
+}
+
+class ExpiryDateInputFormatter extends TextInputFormatter {
+  @override
+  TextEditingValue formatEditUpdate(
+    TextEditingValue oldValue,
+    TextEditingValue newValue,
+  ) {
+    String digitsOnly = newValue.text.replaceAll(RegExp(r'\D'), '');
+    String newString = '';
+
+    for (int i = 0; i < digitsOnly.length && i < 4; i++) {
+      if (i == 2) {
+        newString += '/';
+      }
+      newString += digitsOnly[i];
+    }
+
+    return TextEditingValue(
+      text: newString,
+      selection: TextSelection.collapsed(offset: newString.length),
+    );
+  }
+}
+  

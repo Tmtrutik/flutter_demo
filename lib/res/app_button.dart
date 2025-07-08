@@ -14,6 +14,8 @@ class AppButton extends StatelessWidget {
   final double? height;
   final Widget? icon;
   final MainAxisAlignment? mainAxisAlignment;
+  final TextStyle? textStyle;
+
   const AppButton({
     super.key,
     required this.text,
@@ -26,6 +28,7 @@ class AppButton extends StatelessWidget {
     this.height,
     this.icon,
     this.mainAxisAlignment,
+    this.textStyle,
   });
 
   @override
@@ -49,7 +52,7 @@ class AppButton extends StatelessWidget {
           children: [
             Text(
               text,
-              style: Theme.of(
+              style: textStyle ?? Theme.of( 
                 context,
               ).textTheme.labelLarge?.copyWith(color: AppColors.whiteColor),
             ),

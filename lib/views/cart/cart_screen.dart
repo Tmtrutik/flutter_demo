@@ -3,6 +3,7 @@ import 'package:flutter_demo/res/app_button.dart';
 import 'package:flutter_demo/res/app_colors.dart';
 import 'package:flutter_demo/res/app_icon_button.dart';
 import 'package:flutter_demo/utils/app_assets.dart';
+import 'package:flutter_demo/utils/routes/app_routes.dart';
 import 'package:flutter_demo/utils/utils.dart';
 import 'package:flutter_demo/views/cart/cart_controller.dart';
 import 'package:flutter_demo/views/cart/components/product_tile.dart';
@@ -150,7 +151,9 @@ class CartScreen extends StatelessWidget {
                         ),
                       ),
                       width: Get.width,
-                      onPressed: () {},
+                      onPressed: () {
+                        Get.toNamed(AppRoutes.checkoutScreen);
+                      },
                       color: AppColors.kPrimaryColor,
                       borderRadius: defaultRadius,
                       textColor: AppColors.whiteColor,
