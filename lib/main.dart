@@ -1,13 +1,22 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_demo/data/firebase/firebase_options.dart';
 import 'package:flutter_demo/res/app_colors.dart';
 import 'package:flutter_demo/res/app_theme.dart';
 import 'package:flutter_demo/utils/app_strings.dart';
+import 'package:flutter_demo/utils/color_print.dart';
 import 'package:flutter_demo/utils/routes/app_pages.dart';
 import 'package:flutter_demo/utils/routes/app_routes.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  printWhite("🔥 Firebase initialized!");
   runApp(const MyApp());
 }
 
@@ -36,3 +45,4 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+

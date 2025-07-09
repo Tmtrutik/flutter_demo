@@ -1,0 +1,3 @@
+class FirebaseUtils {
+  FirebaseUtils._();
+}

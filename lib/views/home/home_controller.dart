@@ -25,12 +25,10 @@ class HomeController extends GetxController {
       'price': '\$280',
       'rating': 4.7,
       'image': AppAssets.sneakers3Jpg,
-
     }
   ].obs;
 
   void selectBrand(String brand) {
     selectedBrand.value = brand;
   }
-
 }

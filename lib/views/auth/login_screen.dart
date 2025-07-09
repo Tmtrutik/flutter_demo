@@ -207,8 +207,9 @@ class LoginScreen extends StatelessWidget {
                       15.horizontalSpace,
                       AppIconButton(
                         icon: SvgPicture.asset(AppAssets.googleLogo),
-                        onPressed: () {
+                        onPressed: () async {
                           printWhite('google login pressed');
+                          await AuthRepository.signInWithGoogle();
                         },
                         color: AppColors.whiteColor,
                         borderRadius: BorderRadius.circular(defaultRadius),
