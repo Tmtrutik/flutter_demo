@@ -1,3 +1,4 @@
+import 'package:flutter_demo/data/model/user_model/user_model.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 
@@ -9,6 +10,8 @@ class LoginController extends GetxController {
 
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+
+  RxList<Users> userList = <Users>[].obs;
 
   @override
   void onClose() {
@@ -40,4 +43,4 @@ class LoginController extends GetxController {
 
     return isValid;
   }
-} 
+}

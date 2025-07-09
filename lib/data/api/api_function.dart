@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_demo/data/api/api_class.dart';
-import 'package:flutter_demo/data/api/api_utils.dart';
 import 'package:flutter_demo/data/handler/api_urls.dart';
 import 'package:flutter_demo/utils/local_storage.dart';
 import 'package:flutter_demo/utils/utils.dart';
@@ -18,7 +17,6 @@ class ApiFunction {
         headers: {
           "Content-Type": "application/json",
           "Authorization": "Bearer ${LocalStorage.accessToken.value}",
-          //   "platform": APIPlatform.app.name,
         },
       );
 

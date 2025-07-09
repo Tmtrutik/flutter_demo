@@ -28,21 +28,19 @@ final Connectivity connectivity = Connectivity();
 
 Future<bool> getConnectivityResult({bool showToast = true, RxBool? isLoader}) async {
   try {
-    connectivityResult = (await connectivity.checkConnectivity()) as ConnectivityResult?;
+    connectivityResult = (await connectivity.checkConnectivity());
+
     if (connectivityResult == ConnectivityResult.wifi || connectivityResult == ConnectivityResult.mobile) {
       return true;
     } else {
-      if (showToast == true) {
-//UiUtils.toast(AppStrings.noInternetAvailable);
+      if (showToast) {
         debugPrint('No Internet Available');
         isLoader?.value = false;
       }
       return false;
     }
   } on PlatformException catch (e) {
-    // printErrors(type: "getConnectivityResult Function", errText: e);
     debugPrint("Error Message : $e");
-    // UiUtils.toast(AppStrings.noInternetAvailable);
     debugPrint('No internet Available');
     isLoader?.value = false;
     return false;

@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_demo/data/model/user_model/user_model.dart';
+import 'package:flutter_demo/data/repositories/auth_repository.dart';
 import 'package:flutter_demo/res/app_button.dart';
 import 'package:flutter_demo/res/app_colors.dart';
 import 'package:flutter_demo/res/app_icon_button.dart';
 import 'package:flutter_demo/res/app_textfield.dart';
+import 'package:flutter_demo/utils/app_assets.dart';
 import 'package:flutter_demo/utils/app_textstyle.dart';
 import 'package:flutter_demo/utils/color_print.dart';
 import 'package:flutter_demo/utils/routes/app_routes.dart';
 import 'package:flutter_demo/utils/utils.dart';
-import 'package:flutter_demo/utils/app_assets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+
 import 'login_controller.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -100,12 +104,11 @@ class LoginScreen extends StatelessWidget {
                                 ),
                                 child: Text(
                                   controller.emailError.value,
-                                  style: AppTextStyle.textFieldStyle(context)
-                                      ?.copyWith(
-                                        color: AppColors.redColor,
-                                        fontSize: 10.sp,
-                                        fontWeight: FontWeight.w400,
-                                      ),
+                                  style: AppTextStyle.textFieldStyle(context)?.copyWith(
+                                    color: AppColors.redColor,
+                                    fontSize: 10.sp,
+                                    fontWeight: FontWeight.w400,
+                                  ),
                                   textAlign: TextAlign.center,
                                 ),
                               )
@@ -139,25 +142,32 @@ class LoginScreen extends StatelessWidget {
                                 ),
                                 child: Text(
                                   controller.passwordError.value,
-                                  style: AppTextStyle.textFieldStyle(context)
-                                      ?.copyWith(
-                                        color: AppColors.redColor,
-                                        fontSize: 10.sp,
-                                        fontWeight: FontWeight.w400,
-                                      ),
+                                  style: AppTextStyle.textFieldStyle(context)?.copyWith(
+                                    color: AppColors.redColor,
+                                    fontSize: 10.sp,
+                                    fontWeight: FontWeight.w400,
+                                  ),
                                   textAlign: TextAlign.center,
                                 ),
                               )
                             : SizedBox.shrink(),
 
                         18.verticalSpace,
-
                         // Sign Up Button
                         AppButton(
                           text: 'Sign Up',
                           width: Get.width,
-                          onPressed: () {
+                          onPressed: () async {
                             if (controller.validate()) {
+                              Fluttertoast.showToast(msg: "Hello, User!");
+
+                              await AuthRepository.loginUserApi(context, email: controller.emailController.text, password: controller.passwordController.text, onSuccess: (response) {
+                                controller.userList.add(Users(
+                                  email: response['email'],
+                                  password: response['password'],
+                                ));
+                                printWhite(response.toString());
+                              });
                               Get.toNamed(AppRoutes.homeScreen);
                             }
                           },
@@ -184,9 +194,7 @@ class LoginScreen extends StatelessWidget {
                         borderRadius: BorderRadius.circular(defaultRadius),
                         padding: EdgeInsets.all(defaultPadding / 5),
                       ),
-
                       15.horizontalSpace,
-
                       AppIconButton(
                         icon: SvgPicture.asset(AppAssets.facebookLogo),
                         onPressed: () {
@@ -196,9 +204,7 @@ class LoginScreen extends StatelessWidget {
                         borderRadius: BorderRadius.circular(defaultRadius),
                         padding: EdgeInsets.all(defaultPadding / 5),
                       ),
-
                       15.horizontalSpace,
-
                       AppIconButton(
                         icon: SvgPicture.asset(AppAssets.googleLogo),
                         onPressed: () {
@@ -220,10 +226,10 @@ class LoginScreen extends StatelessWidget {
                       Text(
                         'If you have an account? ',
                         style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                          color: AppColors.whiteColor,
-                          fontSize: 14.0.sp,
-                          fontWeight: FontWeight.w400,
-                        ),
+                              color: AppColors.whiteColor,
+                              fontSize: 14.0.sp,
+                              fontWeight: FontWeight.w400,
+                            ),
                       ),
                       GestureDetector(
                         onTap: () {
@@ -231,8 +237,7 @@ class LoginScreen extends StatelessWidget {
                         },
                         child: Text(
                           'Sign In here',
-                          style: Theme.of(context).textTheme.titleSmall
-                              ?.copyWith(
+                          style: Theme.of(context).textTheme.titleSmall?.copyWith(
                                 decoration: TextDecoration.underline,
                                 decorationColor: AppColors.kPrimaryColor,
                                 color: AppColors.kPrimaryColor,
