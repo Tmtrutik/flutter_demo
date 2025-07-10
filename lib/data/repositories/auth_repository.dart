@@ -2,8 +2,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_demo/data/api/api_function.dart';
 import 'package:flutter_demo/data/handler/api_urls.dart';
+import 'package:flutter_demo/data/model/auth/user_data_model.dart';
 import 'package:flutter_demo/utils/color_print.dart';
+import 'package:flutter_demo/utils/local_storage.dart';
 import 'package:flutter_demo/utils/utils.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -18,26 +21,36 @@ class AuthRepository {
     if (await getConnectivityResult(isLoader: isLoader)) {
       try {
         isLoader?.value = true;
-        final GoogleSignIn googleSignIn = GoogleSignIn.standard(scopes: <String>['email']);
+        final GoogleSignIn googleSignIn = GoogleSignIn(
+          scopes: <String>['email'],
+          serverClientId: '78855505390-dehk4tjr6e19hsdeqoll82jh6tig9v76.apps.googleusercontent.com',
+        );
         await googleSignIn.signOut();
         final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
+        printWhite(googleUser.toString());
         if (googleUser == null) {
-          printWhite(' Google Sign-In cancelled by user');
+          Fluttertoast.showToast(msg: 'SignIn cancle by User');
           return;
         }
         final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+
         if (isValEmpty(googleAuth.idToken) || isValEmpty(googleAuth.accessToken)) {
-          printWhite(' Missing Google ID or Access token');
+          Fluttertoast.showToast(msg: 'Missing Google ID or Access token');
           return;
         }
+        final userData = UserInfoData(name: googleUser.displayName, email: googleUser.email, photoUrl: googleUser.photoUrl, tokenId: Access(token: googleAuth.accessToken));
+
+        await LocalStorage.storeUserInfo(userData);
+        await LocalStorage.storeToken(userData);
+
         final OAuthCredential credential = GoogleAuthProvider.credential(accessToken: googleAuth.accessToken, idToken: googleAuth.idToken);
         final UserCredential firebaseUser = await FirebaseAuth.instance.signInWithCredential(credential);
-        printWhite('Google Sign-In successful: ${firebaseUser.user?.displayName}');
+        Fluttertoast.showToast(msg: 'Welcome ${firebaseUser.user?.displayName}');
         if (onSuccess != null) {
           onSuccess(firebaseUser);
         }
       } catch (e) {
-        printWhite(' Google Sign-In Error: ${e.toString()}');
+        Fluttertoast.showToast(msg: ' Google Sign-In Error: ${e.toString()}');
       } finally {
         isLoader?.value = false;
       }
@@ -45,11 +58,11 @@ class AuthRepository {
   }
 
   /// ***********************************************************************************
-  /// *                                    GET METHOD                                    *
+  /// *                                    GET METHOD                                   *
   /// ***********************************************************************************
 
   /// ***********************************************************************************
-  /// *                                    POST METHOD                                    *
+  /// *                                    POST METHOD                                  *
   /// ***********************************************************************************
 
   static Future<void> loginUserApi(

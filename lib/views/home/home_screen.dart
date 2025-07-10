@@ -5,6 +5,7 @@ import 'package:flutter_demo/res/app_textfield.dart';
 import 'package:flutter_demo/res/app_theme.dart';
 import 'package:flutter_demo/utils/app_assets.dart';
 import 'package:flutter_demo/utils/app_textstyle.dart';
+import 'package:flutter_demo/utils/local_storage.dart';
 import 'package:flutter_demo/utils/routes/app_routes.dart';
 import 'package:flutter_demo/utils/utils.dart';
 import 'package:flutter_demo/views/home/components/feature_card.dart';
@@ -68,7 +69,7 @@ class HomeScreen extends StatelessWidget {
                   children: [
                     SizedBox(height: 10.h),
                     Text(
-                      'Hello, Funke',
+                      'Hello, ${LocalStorage.userName}',
                       style: Theme.of(context).textTheme.titleSmall?.copyWith(
                             fontWeight: FontWeight.w500,
                             fontSize: 15.sp,
