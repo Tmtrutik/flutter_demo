@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_demo/res/app_colors.dart';
 import 'package:flutter_demo/res/app_icon_button.dart';
@@ -50,6 +51,13 @@ class HomeScreen extends StatelessWidget {
 
           // actions
           actions: [
+            if (kDebugMode)
+              AppIconButton(
+                icon: Icon(Icons.shopping_bag),
+                onPressed: () {
+                  Get.toNamed(AppRoutes.cartScreen);
+                },
+              ),
             AppIconButton(
               icon: SvgPicture.asset(AppAssets.menuSvg),
               onPressed: () {},
@@ -163,7 +171,10 @@ class HomeScreen extends StatelessWidget {
                             return ProductCard(
                               product: con.featuredProducts[index],
                               onTap: () {
-                                Get.toNamed(AppRoutes.cartScreen);
+                                Get.toNamed(
+                                  AppRoutes.productDetialScreen,
+                                  arguments: con.featuredProducts[index],
+                                );
                               },
                             );
                           },
