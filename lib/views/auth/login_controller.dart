@@ -1,24 +1,18 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_demo/data/model/user_model/user_model.dart';
 import 'package:get/get.dart';
-import 'package:flutter/material.dart';
 
 class LoginController extends GetxController {
   final RxString email = ''.obs;
   final RxString password = ''.obs;
   final RxString emailError = ''.obs;
   final RxString passwordError = ''.obs;
+  RxBool isLoading = false.obs;
 
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
   RxList<Users> userList = <Users>[].obs;
-
-  @override
-  void onClose() {
-    emailController.dispose();
-    passwordController.dispose();
-    super.onClose();
-  }
 
   bool validate() {
     bool isValid = true;
