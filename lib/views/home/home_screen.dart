@@ -51,6 +51,15 @@ class HomeScreen extends StatelessWidget {
           // actions
           actions: [
             AppIconButton(
+              icon: Icon(
+                Icons.shopping_cart_outlined,
+                size: 20,
+              ),
+              onPressed: () {
+                Get.toNamed(AppRoutes.cartScreen);
+              },
+            ),
+            AppIconButton(
               icon: SvgPicture.asset(AppAssets.menuSvg),
               onPressed: () {},
             ),
@@ -158,13 +167,11 @@ class HomeScreen extends StatelessWidget {
                         child: ListView.separated(
                           scrollDirection: Axis.horizontal,
                           separatorBuilder: (context, index) => 15.horizontalSpace,
-                          itemCount: con.featuredProducts.length,
+                          itemCount: con.productInfo.length,
                           itemBuilder: (context, index) {
                             return ProductCard(
-                              product: con.featuredProducts[index],
-                              onTap: () {
-                                Get.toNamed(AppRoutes.cartScreen);
-                              },
+                              product: con.productInfo[index],
+                              onTap: () {},
                             );
                           },
                         ),
