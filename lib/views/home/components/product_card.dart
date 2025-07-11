@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_demo/data/model/home/home_product_model.dart';
 import 'package:flutter_demo/res/app_colors.dart';
 import 'package:flutter_demo/res/app_theme.dart';
 import 'package:flutter_demo/utils/app_assets.dart';
 import 'package:flutter_demo/utils/utils.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_navigation/get_navigation.dart';
+import 'package:get/get.dart';
 
 class ProductCard extends StatelessWidget {
-  final dynamic product;
+  final HomeProductModel product;
   final Alignment? imageAlignment;
   final VoidCallback? onTap;
-  const ProductCard({super.key, required this.product,this.imageAlignment, this.onTap});
-
+  const ProductCard({super.key, required this.product, this.imageAlignment, this.onTap});
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -32,21 +31,20 @@ class ProductCard extends StatelessWidget {
           child: Column(
             children: [
               ClipRRect(
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(15.r),
-                topRight: Radius.circular(15.r),
-              ),
-              child: SizedBox(  
-                height: 108.h,
-                width: Get.width,
-                child: Image.asset(
-                  product['image'],
-                  fit: BoxFit.cover,
-                  alignment: product['imageAlignment'] ?? Alignment.topCenter,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(15.r),
+                  topRight: Radius.circular(15.r),
+                ),
+                child: SizedBox(
+                  height: 108.h,
+                  width: Get.width,
+                  child: Image.network(
+                    product.image ?? '',
+                    fit: BoxFit.cover,
+                    alignment: imageAlignment ?? Alignment.topCenter,
+                  ),
                 ),
               ),
-            ),
-        
               Padding(
                 padding: const EdgeInsets.symmetric(
                   horizontal: defaultPadding / 2,
@@ -56,32 +54,30 @@ class ProductCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      product['name'],
+                      product.name ?? '',
                       style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                        fontWeight: FontWeight.w400,
-                        color: AppColors.blackColor,
-                      ),
+                            fontWeight: FontWeight.w400,
+                            color: AppColors.blackColor,
+                          ),
                     ),
-        
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          product['price'],
+                          '\$${product.price ?? '0'}',
                           style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                            fontWeight: FontWeight.w700,
-                            color: AppColors.blackColor,
-                            fontFamily: AppTheme.fontFamilyDmsans,
-                          ),
+                                fontWeight: FontWeight.w700,
+                                color: AppColors.blackColor,
+                                fontFamily: AppTheme.fontFamilyDmsans,
+                              ),
                         ),
                         Row(
                           children: [
                             SvgPicture.asset(AppAssets.starSvg),
                             3.horizontalSpace,
                             Text(
-                              product['rating'].toString(),
-                              style: Theme.of(context).textTheme.titleSmall
-                                  ?.copyWith(
+                              product.rating ?? '0.0',
+                              style: Theme.of(context).textTheme.titleSmall?.copyWith(
                                     fontWeight: FontWeight.w400,
                                     color: AppColors.blackColor,
                                     fontFamily: AppTheme.fontFamilyDmsans,
