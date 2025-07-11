@@ -26,243 +26,248 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: true,
-      body: Stack(
-        children: [
-          // Background Image
-          Positioned.fill(
-            child: Image.asset(AppAssets.loginImage, fit: BoxFit.cover),
-          ),
-
-          // Gradient Overlay
-          Positioned.fill(
-            child: Container(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: AppColors.scffoldGradientColorList,
+      body: controller.isLoading.value
+          ? Center(
+              child: CircularProgressIndicator(),
+            )
+          : Stack(
+              children: [
+                // Background Image
+                Positioned.fill(
+                  child: Image.asset(AppAssets.loginImage, fit: BoxFit.cover),
                 ),
-              ),
-            ),
-          ),
 
-          // Main Content
-          SingleChildScrollView(
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: defaultPadding / 0.45),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  100.verticalSpace,
-
-                  // Title
-                  Column(
-                    children: [
-                      Text(
-                        "Sneakers",
-                        style: AppTextStyle.titleStyle(
-                          context,
-                        )?.copyWith(fontSize: 45.0.sp),
+                // Gradient Overlay
+                Positioned.fill(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: AppColors.scffoldGradientColorList,
                       ),
-                      Text(
-                        'Special footwear for everyday use',
-                        style: AppTextStyle.subtitleStyle(
-                          context,
-                        )?.copyWith(fontSize: 14.0.sp),
-                      ),
-                    ],
+                    ),
                   ),
+                ),
 
-                  200.verticalSpace,
-
-                  // Form Section
-                  Obx(
-                    () => Column(
+                // Main Content
+                SingleChildScrollView(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: defaultPadding / 0.45),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        // Email TextField
-                        AppTextField(
-                          hintText: 'Email',
-                          color: AppColors.whiteColor,
-                          hintStyle: AppTextStyle.textFieldStyle(
-                            context,
-                          )?.copyWith(fontWeight: FontWeight.w300),
-                          icon: SvgPicture.asset(
-                            AppAssets.mailSvg,
-                            colorFilter: ColorFilter.mode(
-                              AppColors.hintTextColor,
-                              BlendMode.srcIn,
+                        100.verticalSpace,
+
+                        // Title
+                        Column(
+                          children: [
+                            Text(
+                              "Sneakers",
+                              style: AppTextStyle.titleStyle(
+                                context,
+                              )?.copyWith(fontSize: 45.0.sp),
                             ),
-                          ),
-                          controller: controller.emailController,
-                          onChanged: (val) => controller.email.value = val,
+                            Text(
+                              'Special footwear for everyday use',
+                              style: AppTextStyle.subtitleStyle(
+                                context,
+                              )?.copyWith(fontSize: 14.0.sp),
+                            ),
+                          ],
                         ),
-                        controller.emailError.value.isNotEmpty
-                            ? Padding(
-                                padding: const EdgeInsets.only(
-                                  left: 8.0,
-                                  top: 4.0,
+
+                        200.verticalSpace,
+
+                        // Form Section
+                        Obx(
+                          () => Column(
+                            children: [
+                              // Email TextField
+                              AppTextField(
+                                hintText: 'Email',
+                                color: AppColors.whiteColor,
+                                hintStyle: AppTextStyle.textFieldStyle(
+                                  context,
+                                )?.copyWith(fontWeight: FontWeight.w300),
+                                icon: SvgPicture.asset(
+                                  AppAssets.mailSvg,
+                                  colorFilter: ColorFilter.mode(
+                                    AppColors.hintTextColor,
+                                    BlendMode.srcIn,
+                                  ),
                                 ),
-                                child: Text(
-                                  controller.emailError.value,
-                                  style: AppTextStyle.textFieldStyle(context)?.copyWith(
-                                    color: AppColors.redColor,
-                                    fontSize: 10.sp,
+                                controller: controller.emailController,
+                                onChanged: (val) => controller.email.value = val,
+                              ),
+                              controller.emailError.value.isNotEmpty
+                                  ? Padding(
+                                      padding: const EdgeInsets.only(
+                                        left: 8.0,
+                                        top: 4.0,
+                                      ),
+                                      child: Text(
+                                        controller.emailError.value,
+                                        style: AppTextStyle.textFieldStyle(context)?.copyWith(
+                                          color: AppColors.redColor,
+                                          fontSize: 10.sp,
+                                          fontWeight: FontWeight.w400,
+                                        ),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    )
+                                  : SizedBox.shrink(),
+
+                              18.verticalSpace,
+
+                              // Password TextField
+                              AppTextField(
+                                hintText: 'Password',
+                                color: AppColors.whiteColor,
+                                obscureText: true,
+                                hintStyle: AppTextStyle.textFieldStyle(
+                                  context,
+                                )?.copyWith(fontWeight: FontWeight.w300),
+                                icon: SvgPicture.asset(
+                                  AppAssets.lockSvg,
+                                  colorFilter: ColorFilter.mode(
+                                    AppColors.hintTextColor,
+                                    BlendMode.srcIn,
+                                  ),
+                                ),
+                                controller: controller.passwordController,
+                                onChanged: (val) => controller.password.value = val,
+                              ),
+                              controller.passwordError.value.isNotEmpty
+                                  ? Padding(
+                                      padding: const EdgeInsets.only(
+                                        left: 8.0,
+                                        top: 4.0,
+                                      ),
+                                      child: Text(
+                                        controller.passwordError.value,
+                                        style: AppTextStyle.textFieldStyle(context)?.copyWith(
+                                          color: AppColors.redColor,
+                                          fontSize: 10.sp,
+                                          fontWeight: FontWeight.w400,
+                                        ),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    )
+                                  : SizedBox.shrink(),
+
+                              18.verticalSpace,
+                              // Sign Up Button
+                              AppButton(
+                                text: 'Sign Up',
+                                width: Get.width,
+                                onPressed: () async {
+                                  if (controller.validate()) {
+                                    Fluttertoast.showToast(msg: "Hello, User!");
+
+                                    await AuthRepository.loginUserApi(context, email: controller.emailController.text, password: controller.passwordController.text, onSuccess: (response) {
+                                      controller.userList.add(Users(
+                                        email: response['email'],
+                                        password: response['password'],
+                                      ));
+                                      printWhite(response.toString());
+                                    });
+                                    Get.toNamed(AppRoutes.homeScreen);
+                                  }
+                                },
+                                color: AppColors.kPrimaryColor,
+                                borderRadius: defaultRadius,
+                                textColor: AppColors.whiteColor,
+                              ),
+                            ],
+                          ),
+                        ),
+
+                        30.verticalSpace,
+
+                        // Social Media Section
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            AppIconButton(
+                              icon: SvgPicture.asset(AppAssets.appleLogo),
+                              onPressed: () {
+                                printWhite('apple login pressed');
+                              },
+                              color: AppColors.whiteColor,
+                              borderRadius: BorderRadius.circular(defaultRadius),
+                              padding: EdgeInsets.all(defaultPadding / 5),
+                            ),
+                            15.horizontalSpace,
+                            AppIconButton(
+                              icon: SvgPicture.asset(AppAssets.facebookLogo),
+                              onPressed: () {
+                                printWhite('facebook login pressed');
+                              },
+                              color: AppColors.whiteColor,
+                              borderRadius: BorderRadius.circular(defaultRadius),
+                              padding: EdgeInsets.all(defaultPadding / 5),
+                            ),
+                            15.horizontalSpace,
+                            AppIconButton(
+                              icon: SvgPicture.asset(AppAssets.googleLogo),
+                              onPressed: () async {
+                                printWhite('google login pressed');
+                                await AuthRepository.signInWithGoogle(
+                                  isLoader: controller.isLoading,
+                                  onSuccess: (val) {
+                                    if (val.user != null) {
+                                      Get.toNamed(AppRoutes.homeScreen);
+                                    }
+                                  },
+                                );
+                              },
+                              color: AppColors.whiteColor,
+                              borderRadius: BorderRadius.circular(defaultRadius),
+                              padding: EdgeInsets.all(defaultPadding / 5),
+                            ),
+                          ],
+                        ),
+
+                        30.verticalSpace,
+
+                        // Sign In Section
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              'If you have an account? ',
+                              style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                                    color: AppColors.whiteColor,
+                                    fontSize: 14.0.sp,
                                     fontWeight: FontWeight.w400,
                                   ),
-                                  textAlign: TextAlign.center,
-                                ),
-                              )
-                            : SizedBox.shrink(),
-
-                        18.verticalSpace,
-
-                        // Password TextField
-                        AppTextField(
-                          hintText: 'Password',
-                          color: AppColors.whiteColor,
-                          obscureText: true,
-                          hintStyle: AppTextStyle.textFieldStyle(
-                            context,
-                          )?.copyWith(fontWeight: FontWeight.w300),
-                          icon: SvgPicture.asset(
-                            AppAssets.lockSvg,
-                            colorFilter: ColorFilter.mode(
-                              AppColors.hintTextColor,
-                              BlendMode.srcIn,
                             ),
-                          ),
-                          controller: controller.passwordController,
-                          onChanged: (val) => controller.password.value = val,
+                            GestureDetector(
+                              onTap: () {
+                                printWhite('sign in here pressed');
+                              },
+                              child: Text(
+                                'Sign In here',
+                                style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                                      decoration: TextDecoration.underline,
+                                      decorationColor: AppColors.kPrimaryColor,
+                                      color: AppColors.kPrimaryColor,
+                                      fontSize: 14.0.sp,
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                              ),
+                            ),
+                          ],
                         ),
-                        controller.passwordError.value.isNotEmpty
-                            ? Padding(
-                                padding: const EdgeInsets.only(
-                                  left: 8.0,
-                                  top: 4.0,
-                                ),
-                                child: Text(
-                                  controller.passwordError.value,
-                                  style: AppTextStyle.textFieldStyle(context)?.copyWith(
-                                    color: AppColors.redColor,
-                                    fontSize: 10.sp,
-                                    fontWeight: FontWeight.w400,
-                                  ),
-                                  textAlign: TextAlign.center,
-                                ),
-                              )
-                            : SizedBox.shrink(),
 
-                        18.verticalSpace,
-                        // Sign Up Button
-                        AppButton(
-                          text: 'Sign Up',
-                          width: Get.width,
-                          onPressed: () async {
-                            if (controller.validate()) {
-                              Fluttertoast.showToast(msg: "Hello, User!");
-
-                              await AuthRepository.loginUserApi(context, email: controller.emailController.text, password: controller.passwordController.text, onSuccess: (response) {
-                                controller.userList.add(Users(
-                                  email: response['email'],
-                                  password: response['password'],
-                                ));
-                                printWhite(response.toString());
-                              });
-                              Get.toNamed(AppRoutes.homeScreen);
-                            }
-                          },
-                          color: AppColors.kPrimaryColor,
-                          borderRadius: defaultRadius,
-                          textColor: AppColors.whiteColor,
-                        ),
+                        32.verticalSpace,
                       ],
                     ),
                   ),
-
-                  30.verticalSpace,
-
-                  // Social Media Section
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      AppIconButton(
-                        icon: SvgPicture.asset(AppAssets.appleLogo),
-                        onPressed: () {
-                          printWhite('apple login pressed');
-                        },
-                        color: AppColors.whiteColor,
-                        borderRadius: BorderRadius.circular(defaultRadius),
-                        padding: EdgeInsets.all(defaultPadding / 5),
-                      ),
-                      15.horizontalSpace,
-                      AppIconButton(
-                        icon: SvgPicture.asset(AppAssets.facebookLogo),
-                        onPressed: () {
-                          printWhite('facebook login pressed');
-                        },
-                        color: AppColors.whiteColor,
-                        borderRadius: BorderRadius.circular(defaultRadius),
-                        padding: EdgeInsets.all(defaultPadding / 5),
-                      ),
-                      15.horizontalSpace,
-                      AppIconButton(
-                        icon: SvgPicture.asset(AppAssets.googleLogo),
-                        onPressed: () async {
-                          printWhite('google login pressed');
-                          await AuthRepository.signInWithGoogle(
-                            onSuccess: (val) {
-                              if (val.user != null) {
-                                Get.toNamed(AppRoutes.homeScreen);
-                              }
-                            },
-                          );
-                        },
-                        color: AppColors.whiteColor,
-                        borderRadius: BorderRadius.circular(defaultRadius),
-                        padding: EdgeInsets.all(defaultPadding / 5),
-                      ),
-                    ],
-                  ),
-
-                  30.verticalSpace,
-
-                  // Sign In Section
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'If you have an account? ',
-                        style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                              color: AppColors.whiteColor,
-                              fontSize: 14.0.sp,
-                              fontWeight: FontWeight.w400,
-                            ),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          printWhite('sign in here pressed');
-                        },
-                        child: Text(
-                          'Sign In here',
-                          style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                                decoration: TextDecoration.underline,
-                                decorationColor: AppColors.kPrimaryColor,
-                                color: AppColors.kPrimaryColor,
-                                fontSize: 14.0.sp,
-                                fontWeight: FontWeight.w700,
-                              ),
-                        ),
-                      ),
-                    ],
-                  ),
-
-                  32.verticalSpace,
-                ],
-              ),
+                ),
+              ],
             ),
-          ),
-        ],
-      ),
     );
   }
 }

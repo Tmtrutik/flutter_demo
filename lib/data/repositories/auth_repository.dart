@@ -40,19 +40,38 @@ class AuthRepository {
         }
         final userData = UserInfoData(name: googleUser.displayName, email: googleUser.email, photoUrl: googleUser.photoUrl, tokenId: Access(token: googleAuth.accessToken));
 
-        await LocalStorage.storeUserInfo(userData);
-        await LocalStorage.storeToken(userData);
-
         final OAuthCredential credential = GoogleAuthProvider.credential(accessToken: googleAuth.accessToken, idToken: googleAuth.idToken);
         final UserCredential firebaseUser = await FirebaseAuth.instance.signInWithCredential(credential);
+        await LocalStorage.storeUserInfo(userData);
+        await LocalStorage.storeToken(userData);
         Fluttertoast.showToast(msg: 'Welcome ${firebaseUser.user?.displayName}');
         if (onSuccess != null) {
           onSuccess(firebaseUser);
         }
       } catch (e) {
+        printWhite(' Google Sign-In Error: ${e.toString()}');
         Fluttertoast.showToast(msg: ' Google Sign-In Error: ${e.toString()}');
       } finally {
         isLoader?.value = false;
+      }
+    }
+  }
+
+  // ************************************************************************************
+  /// *                              SIGN OUT WITH GOOGLE                               *
+  /// ***********************************************************************************
+
+  static Future<void> signOutWithGoogle({RxBool? isLoader}) async {
+    if (await getConnectivityResult(isLoader: isLoader)) {
+      try {
+        isLoader?.value = true;
+        final GoogleSignIn googleSignIn = GoogleSignIn();
+        await googleSignIn.signOut();
+        isLoader?.value = false;
+        printWhite('Google Sign-Out successful');
+      } catch (e) {
+        isLoader?.value = false;
+        Fluttertoast.showToast(msg: 'Google Sign-Out Error: ${e.toString()}');
       }
     }
   }
