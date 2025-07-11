@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_demo/data/repositories/auth_repository.dart';
 import 'package:flutter_demo/res/app_colors.dart';
 import 'package:flutter_demo/res/app_icon_button.dart';
 import 'package:flutter_demo/res/app_textfield.dart';
 import 'package:flutter_demo/res/app_theme.dart';
 import 'package:flutter_demo/utils/app_assets.dart';
 import 'package:flutter_demo/utils/app_textstyle.dart';
+import 'package:flutter_demo/utils/color_print.dart';
 import 'package:flutter_demo/utils/local_storage.dart';
 import 'package:flutter_demo/utils/routes/app_routes.dart';
 import 'package:flutter_demo/utils/utils.dart';
@@ -39,13 +41,31 @@ class HomeScreen extends StatelessWidget {
           ),
 
           // title
-          title: Text(
-            'Sneakers',
-            style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                  fontWeight: FontWeight.w700,
-                  fontSize: 19.sp,
-                ),
+          title: GestureDetector(
+            onTap: () async {
+              printWhite('Logout started...');
+
+              await AuthRepository.signOutWithGoogle();
+
+              await LocalStorage.clearData();
+
+              printWhite('Logout completed');
+              printWhite('accessToken: ${LocalStorage.accessToken.value}');
+              printWhite('userName: ${LocalStorage.userName.value}');
+              printWhite('userEmail: ${LocalStorage.userEmail.value}');
+              printWhite('userPhoto: ${LocalStorage.userPhoto.value}');
+
+              Get.offAllNamed(AppRoutes.loginScreen);
+            },
+            child: Text(
+              'Sneakers',
+              style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                    fontWeight: FontWeight.w700,
+                    fontSize: 19.sp,
+                  ),
+            ),
           ),
+
           centerTitle: true,
 
           // actions

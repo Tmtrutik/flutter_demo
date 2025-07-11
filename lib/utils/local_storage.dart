@@ -14,36 +14,42 @@ class Prefs {
 class LocalStorage {
   LocalStorage._();
 
-  static GetStorage box = GetStorage('localData');
+  static GetStorage myData = GetStorage('localData');
   static RxString accessToken = ''.obs;
   static RxString userName = ''.obs;
   static RxString userEmail = ''.obs;
   static RxString userPhoto = ''.obs;
 
   static Future<void> storeUserInfo(UserInfoData? userData) async {
-    await box.write(Prefs.userName, userData?.name);
-    await box.write(Prefs.userEmail, userData?.email);
-    await box.write(Prefs.userPhoto, userData?.photoUrl);
+    await myData.write(Prefs.userName, userData?.name);
+    await myData.write(Prefs.userEmail, userData?.email);
+    await myData.write(Prefs.userPhoto, userData?.photoUrl);
 
-    userName.value = box.read(Prefs.userName) ?? 'User';
-    userEmail.value = box.read(Prefs.userEmail) ?? 'Email';
-    userPhoto.value = box.read(Prefs.userPhoto) ?? 'Photo';
+    userName.value = myData.read(Prefs.userName) ?? 'User';
+    userEmail.value = myData.read(Prefs.userEmail) ?? 'Email';
+    userPhoto.value = myData.read(Prefs.userPhoto) ?? 'Photo';
   }
 
   static Future<void> storeToken(UserInfoData? tokenId) async {
     if (!isValEmpty(tokenId?.tokenId?.token)) {
-      await box.write(Prefs.accessToken, tokenId!.tokenId?.token ?? '');
-      accessToken.value = box.read(Prefs.accessToken) ?? '';
+      await myData.write(Prefs.accessToken, tokenId!.tokenId?.token ?? '');
+      accessToken.value = myData.read(Prefs.accessToken) ?? '';
     }
     printWhite('token : ${accessToken.value}');
   }
 
   static Future<void> clearData() async {
-    await box.erase();
+    await myData.erase();
+
+    ///clear Values
+    accessToken.value = '';
+    userName.value = '';
+    userEmail.value = '';
+    userPhoto.value = '';
   }
 
   static bool get isLoggedIn {
-  final token = box.read(Prefs.accessToken);
-  return token != null && token.toString().isNotEmpty;
-}
+    final token = myData.read(Prefs.accessToken);
+    return token != null && token.toString().isNotEmpty;
+  }
 }
