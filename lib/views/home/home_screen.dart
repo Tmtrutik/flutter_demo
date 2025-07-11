@@ -1,6 +1,6 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_demo/data/repositories/auth_repository.dart';
+import 'package:flutter_demo/res/app_button.dart';
 import 'package:flutter_demo/res/app_colors.dart';
 import 'package:flutter_demo/res/app_icon_button.dart';
 import 'package:flutter_demo/res/app_textfield.dart';
@@ -47,7 +47,6 @@ class HomeScreen extends StatelessWidget {
               printWhite('Logout started...');
 
               await AuthRepository.signOutWithGoogle();
-
               await LocalStorage.clearData();
 
               printWhite('Logout completed');
@@ -71,13 +70,6 @@ class HomeScreen extends StatelessWidget {
 
           // actions
           actions: [
-            if (kDebugMode)
-              AppIconButton(
-                icon: Icon(Icons.shopping_bag),
-                onPressed: () {
-                  Get.toNamed(AppRoutes.cartScreen);
-                },
-              ),
             AppIconButton(
               icon: Icon(
                 Icons.shopping_cart_outlined,
@@ -87,9 +79,127 @@ class HomeScreen extends StatelessWidget {
                 Get.toNamed(AppRoutes.cartScreen);
               },
             ),
+
+            ///Add Product Button
             AppIconButton(
               icon: SvgPicture.asset(AppAssets.menuSvg),
-              onPressed: () {},
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: Text('Add New Product'),
+                      backgroundColor: Colors.white,
+                      content: SizedBox(
+                        width: Get.width,
+                        child: Form(
+                          key: con.formKey,
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              // Product Name
+                              TextFormField(
+                                decoration: InputDecoration(
+                                  labelText: 'Product Name',
+                                  hintText: 'Enter product name',
+                                  border: OutlineInputBorder(),
+                                ),
+                                controller: con.productName,
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Please enter product name';
+                                  }
+                                  return null;
+                                },
+                              ),
+                              (defaultPadding / 2).verticalSpace,
+
+                              // Product Price
+                              TextFormField(
+                                decoration: InputDecoration(
+                                  labelText: 'Price',
+                                  hintText: 'Enter price',
+                                  border: OutlineInputBorder(),
+                                ),
+                                keyboardType: TextInputType.number,
+                                controller: con.productPrice,
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Please enter price';
+                                  }
+                                  if (double.tryParse(value) == null) {
+                                    return 'Enter a valid number';
+                                  }
+                                  return null;
+                                },
+                              ),
+                              (defaultPadding / 2).verticalSpace,
+                              //Producct Rating
+                              TextFormField(
+                                decoration: InputDecoration(
+                                  labelText: 'Product Rating',
+                                  hintText: 'Enter product rating',
+                                  border: OutlineInputBorder(),
+                                ),
+                                controller: con.productRating,
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Please enter product rating';
+                                  }
+                                  return null;
+                                },
+                              ),
+                              (defaultPadding / 2).verticalSpace,
+                              //Product Image URL
+                              TextFormField(
+                                decoration: InputDecoration(
+                                  labelText: 'Product Image Url',
+                                  hintText: 'Enter product Image',
+                                  border: OutlineInputBorder(),
+                                ),
+                                controller: con.productImageUrl,
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Please enter product image';
+                                  }
+                                  return null;
+                                },
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      actions: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            AppButton(
+                              text: 'Cancle',
+                              color: AppColors.redColor.withAlpha(200),
+                              onPressed: () {
+                                Get.back();
+                              },
+                            ),
+                            AppButton(
+                              text: 'Add',
+                              color: AppColors.kPrimaryColor,
+                              width: Get.width / 3,
+                              onPressed: () {
+                                if (con.formKey.currentState?.validate() ?? false) {
+                                  final name = con.productName.text.trim();
+                                  final price = con.productPrice.text.trim();
+                                  printWhite('product Info : $name & $price ');
+                                  Get.back();
+                                }
+                              },
+                            ),
+                          ],
+                        ),
+                      ],
+                    );
+                  },
+                );
+              },
             ),
           ],
         ),
@@ -197,9 +307,15 @@ class HomeScreen extends StatelessWidget {
                           separatorBuilder: (context, index) => 15.horizontalSpace,
                           itemCount: con.productInfo.length,
                           itemBuilder: (context, index) {
+                            ///*PRODUCT CARD AND DETAIL SCREEN
                             return ProductCard(
                               product: con.productInfo[index],
-                              onTap: () {},
+                              onTap: () {
+                                Get.toNamed(
+                                  AppRoutes.productDetialScreen,
+                                  arguments: {'product': con.productInfo[index]},
+                                );
+                              },
                             );
                           },
                         ),

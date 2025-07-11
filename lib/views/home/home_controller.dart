@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_demo/data/model/home/home_product_model.dart';
 import 'package:flutter_demo/data/repositories/home_repository.dart';
 import 'package:flutter_demo/utils/app_assets.dart';
@@ -6,7 +7,15 @@ import 'package:get/get.dart';
 class HomeController extends GetxController {
   final RxList<String> brands = <String>['Adidas', 'Nike', 'Gucci', 'Vans', 'Converse'].obs;
   RxString selectedBrand = 'Adidas'.obs;
-  RxBool isLoading = true.obs;
+  RxBool isLoading = false.obs;
+
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
+  TextEditingController productName = TextEditingController();
+  TextEditingController productPrice = TextEditingController();
+  TextEditingController productRating = TextEditingController();
+  TextEditingController productImageUrl = TextEditingController();
+
   final RxList<HomeProductModel> productInfo = <HomeProductModel>[].obs;
   final RxList<Map<String, dynamic>> featuredProducts = <Map<String, dynamic>>[
     {

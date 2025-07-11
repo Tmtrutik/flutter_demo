@@ -9,6 +9,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
+///product Details
 class ProductDetailsScreen extends StatelessWidget {
   ProductDetailsScreen({super.key});
 
@@ -16,7 +17,6 @@ class ProductDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final product = Get.arguments as Map<String, dynamic>;
     return Scaffold(
       backgroundColor: AppColors.backgroundgrey,
       appBar: AppBar(
@@ -42,8 +42,8 @@ class ProductDetailsScreen extends StatelessWidget {
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(defaultRadius * 2),
-            child: Image.asset(
-              product['image'],
+            child: Image.network(
+              con.product.image ?? '',
               height: 1.1.sw,
               width: Get.width,
               fit: BoxFit.fill,
@@ -59,15 +59,17 @@ class ProductDetailsScreen extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
+                ///product name
                 Text(
-                  product['name'],
+                  con.product.name ?? '',
                   style: Theme.of(context).textTheme.titleLarge?.copyWith(fontSize: 16.sp),
                 ),
                 Text.rich(
                   TextSpan(
                     children: [
+                      ///product price
                       TextSpan(
-                        text: '\t${product['price']}\n',
+                        text: '\t\$${con.product.price ?? '0'}\n',
                         style: Theme.of(context).textTheme.titleSmall?.copyWith(
                               fontWeight: FontWeight.w700,
                             ),
@@ -75,8 +77,10 @@ class ProductDetailsScreen extends StatelessWidget {
                       WidgetSpan(
                         child: SvgPicture.asset(AppAssets.starSvg),
                       ),
+
+                      ///product rating
                       TextSpan(
-                        text: ' ${product['rating']} ',
+                        text: ' ${con.product.rating ?? '0'} ',
                         style: Theme.of(context).textTheme.titleSmall?.copyWith(
                               color: Colors.grey,
                             ),
@@ -87,6 +91,8 @@ class ProductDetailsScreen extends StatelessWidget {
               ],
             ),
           ),
+
+          ///product description
           Container(
             padding: EdgeInsets.all(defaultPadding),
             decoration: BoxDecoration(
@@ -97,6 +103,8 @@ class ProductDetailsScreen extends StatelessWidget {
           ),
         ],
       ),
+
+      ///bottom button
       bottomNavigationBar: AppButton(
         text: 'Add To Cart',
         onPressed: () {},
