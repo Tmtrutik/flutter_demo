@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_demo/data/model/home/home_product_model.dart';
 import 'package:flutter_demo/data/repositories/auth_repository.dart';
+import 'package:flutter_demo/data/repositories/home_repository.dart';
 import 'package:flutter_demo/res/app_button.dart';
 import 'package:flutter_demo/res/app_colors.dart';
 import 'package:flutter_demo/res/app_icon_button.dart';
@@ -47,6 +49,7 @@ class HomeScreen extends StatelessWidget {
               printWhite('Logout started...');
 
               await AuthRepository.signOutWithGoogle();
+
               await LocalStorage.clearData();
 
               printWhite('Logout completed');
@@ -79,8 +82,6 @@ class HomeScreen extends StatelessWidget {
                 Get.toNamed(AppRoutes.cartScreen);
               },
             ),
-
-            ///Add Product Button
             AppIconButton(
               icon: SvgPicture.asset(AppAssets.menuSvg),
               onPressed: () {
@@ -191,6 +192,13 @@ class HomeScreen extends StatelessWidget {
                                   printWhite('product Info : $name & $price ');
                                   Get.back();
                                 }
+                                HomeRepository.postProductApi(onSuccess: (response) {
+                                  con.productInfo.add(HomeProductModel.fromJson(response));
+                                  con.productName.clear();
+                                  con.productPrice.clear();
+                                  con.productRating.clear();
+                                  con.productImageUrl.clear();
+                                });
                               },
                             ),
                           ],
@@ -275,9 +283,7 @@ class HomeScreen extends StatelessWidget {
                               () => GestureDetector(
                                 onTap: () => con.selectBrand(category),
                                 child: Container(
-                                  padding: EdgeInsets.symmetric(
-                                    horizontal: 15.w,
-                                  ),
+                                  padding: EdgeInsets.symmetric(horizontal: 15.w),
                                   decoration: BoxDecoration(
                                     color: con.selectedBrand.value == category ? AppColors.kPrimaryColor : AppColors.backgroundgrey,
                                     borderRadius: BorderRadius.circular(30.r),
@@ -300,21 +306,43 @@ class HomeScreen extends StatelessWidget {
                         ),
                       ),
                       18.verticalSpace,
+
+                      ///Loading indicator when data is loaded
+                      if (con.isLoading.value)
+                        SizedBox(
+                          height: 160.h,
+                          child: Center(child: CircularProgressIndicator()),
+                        ),
+
+                      ///when list is empty
+                      if (con.productInfo.isEmpty)
+                        SizedBox(
+                          height: 160.h,
+                          child: Center(
+                            child: Text(
+                              'No products found',
+                              style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                                    fontSize: 14.sp,
+                                    color: AppColors.greyColor,
+                                  ),
+                            ),
+                          ),
+                        ),
+
+                      ///Product List
                       SizedBox(
                         height: 160.h,
                         child: ListView.separated(
+                          shrinkWrap: true,
+                          physics: const AlwaysScrollableScrollPhysics(),
                           scrollDirection: Axis.horizontal,
                           separatorBuilder: (context, index) => 15.horizontalSpace,
                           itemCount: con.productInfo.length,
                           itemBuilder: (context, index) {
-                            ///*PRODUCT CARD AND DETAIL SCREEN
                             return ProductCard(
                               product: con.productInfo[index],
                               onTap: () {
-                                Get.toNamed(
-                                  AppRoutes.productDetialScreen,
-                                  arguments: {'product': con.productInfo[index]},
-                                );
+                                Get.toNamed(AppRoutes.productDetialScreen, arguments: {'productInfo': con.productInfo[index]});
                               },
                             );
                           },

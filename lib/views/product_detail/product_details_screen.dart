@@ -3,6 +3,7 @@ import 'package:flutter_demo/res/app_button.dart';
 import 'package:flutter_demo/res/app_colors.dart';
 import 'package:flutter_demo/res/app_icon_button.dart';
 import 'package:flutter_demo/utils/app_assets.dart';
+import 'package:flutter_demo/utils/routes/app_routes.dart';
 import 'package:flutter_demo/utils/utils.dart';
 import 'package:flutter_demo/views/product_detail/product_details_controller.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -107,7 +108,9 @@ class ProductDetailsScreen extends StatelessWidget {
       ///bottom button
       bottomNavigationBar: AppButton(
         text: 'Add To Cart',
-        onPressed: () {},
+        onPressed: () {
+          Get.toNamed(AppRoutes.cartScreen, arguments: {'products': con.product});
+        },
         color: AppColors.kPrimaryColor,
       ).paddingOnly(bottom: defaultPadding * 2, right: defaultPadding, left: defaultPadding),
     );
