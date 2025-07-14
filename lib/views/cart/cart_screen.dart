@@ -67,6 +67,7 @@ class CartScreen extends StatelessWidget {
         children: [
           Expanded(
             child: SingleChildScrollView(
+              physics: RangeMaintainingScrollPhysics(),
               child: Column(
                 children: [
                   30.verticalSpace,
@@ -75,7 +76,7 @@ class CartScreen extends StatelessWidget {
                     child: Obx(
                       () => ListView.separated(
                         shrinkWrap: true,
-                        physics: AlwaysScrollableScrollPhysics(),
+                        physics: NeverScrollableScrollPhysics(),
                         itemCount: con.cartProducts.length,
                         separatorBuilder: (context, index) => SizedBox(height: 30),
                         itemBuilder: (context, index) {
