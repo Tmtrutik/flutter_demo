@@ -100,12 +100,24 @@ class ExpiryDateInputFormatter extends TextInputFormatter {
     TextEditingValue newValue,
   ) {
     String digitsOnly = newValue.text.replaceAll(RegExp(r'\D'), '');
-    String newString = '';
 
-    for (int i = 0; i < digitsOnly.length && i < 4; i++) {
-      if (i == 2) {
-        newString += '/';
+    if (digitsOnly.isNotEmpty) {
+      if (int.parse(digitsOnly[0]) > 1) {
+        digitsOnly = '0${digitsOnly[0]}${digitsOnly.substring(1)}';
       }
+    }
+
+    if (digitsOnly.length >= 2) {
+      String month = digitsOnly.substring(0, 2);
+      int monthInt = int.tryParse(month) ?? 0;
+      if (monthInt < 1 || monthInt > 12) {
+        return oldValue;
+      }
+    }
+
+    String newString = '';
+    for (int i = 0; i < digitsOnly.length && i < 4; i++) {
+      if (i == 2) newString += '/';
       newString += digitsOnly[i];
     }
 
@@ -115,4 +127,5 @@ class ExpiryDateInputFormatter extends TextInputFormatter {
     );
   }
 }
+
   

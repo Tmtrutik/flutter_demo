@@ -5,6 +5,7 @@ import 'package:flutter_demo/res/app_colors.dart';
 import 'package:flutter_demo/res/app_icon_button.dart';
 import 'package:flutter_demo/res/app_textfield.dart';
 import 'package:flutter_demo/utils/app_assets.dart';
+import 'package:flutter_demo/utils/app_textstyle.dart';
 import 'package:flutter_demo/utils/routes/app_routes.dart';
 import 'package:flutter_demo/utils/utils.dart';
 import 'package:flutter_demo/views/payment/checkout_controller.dart';
@@ -54,9 +55,9 @@ class CheckoutScreen extends StatelessWidget {
         ],
       ),
 
-      body: Obx(
-        () => SingleChildScrollView(
-          child: Column(
+      body: SingleChildScrollView(
+        child: Obx(
+          () => Column(
             children: [
               defaultPadding.verticalSpace,
 
@@ -166,12 +167,28 @@ class CheckoutScreen extends StatelessWidget {
                           hintStyle: Theme.of(context).textTheme.titleSmall
                               ?.copyWith(
                                 fontWeight: FontWeight.w300,
-                                fontSize: 18.sp,
+                                fontSize: 17.sp,
                                 color: AppColors.hintTextColor,
                               ),
                         ),
                       ),
-                      
+                      con.cardNumberError.value.isNotEmpty
+                          ? Padding(
+                              padding: const EdgeInsets.only(
+                                left: 8.0,
+                                top: 4.0,
+                              ),
+                              child: Text(
+                                con.cardNumberError.value,
+                                style: AppTextStyle.textFieldStyle(context)
+                                    ?.copyWith(
+                                      color: AppColors.redColor,
+                                      fontSize: 10.sp,
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                              ),
+                            )
+                          : SizedBox.shrink(),
 
                       15.verticalSpace,
 
@@ -186,6 +203,9 @@ class CheckoutScreen extends StatelessWidget {
                       5.verticalSpace,
 
                       TextFormField(
+                        keyboardType: TextInputType.name,
+                        controller: con.cardHolderNameController,
+                        onChanged: (val) => con.cardHolderName.value = val,
                         decoration: InputDecoration(
                           filled: true,
                           fillColor: AppColors.tfbgcolor,
@@ -201,11 +221,28 @@ class CheckoutScreen extends StatelessWidget {
                           hintStyle: Theme.of(context).textTheme.titleSmall
                               ?.copyWith(
                                 fontWeight: FontWeight.w300,
-                                fontSize: 18.sp,
+                                fontSize: 17.sp,
                                 color: AppColors.hintTextColor,
                               ),
                         ),
                       ),
+                      con.cardHolderError.value.isNotEmpty
+                          ? Padding(
+                              padding: const EdgeInsets.only(
+                                left: 8.0,
+                                top: 4.0,
+                              ),
+                              child: Text(
+                                con.cardHolderError.value,
+                                style: AppTextStyle.textFieldStyle(context)
+                                    ?.copyWith(
+                                      color: AppColors.redColor,
+                                      fontSize: 10.sp,
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                              ),
+                            )
+                          : SizedBox.shrink(),
 
                       15.verticalSpace,
 
@@ -236,67 +273,140 @@ class CheckoutScreen extends StatelessWidget {
                       Row(
                         children: [
                           Expanded(
-                            child: TextFormField(
-                              keyboardType: TextInputType.number,
-                              inputFormatters: [
-                                FilteringTextInputFormatter.digitsOnly,
-                                LengthLimitingTextInputFormatter(6),
-                                ExpiryDateInputFormatter(),
-                              ],
-                              decoration: InputDecoration(
-                                filled: true,
-                                fillColor: AppColors.tfbgcolor,
-                                contentPadding: EdgeInsets.symmetric(
-                                  horizontal: 18.w,
-                                  vertical: 10.h,
-                                ),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(8.r),
-                                  borderSide: BorderSide.none,
-                                ),
-                                hintText: 'MM / YY',
-                                hintStyle: Theme.of(context)
-                                    .textTheme
-                                    .titleSmall
-                                    ?.copyWith(
-                                      fontWeight: FontWeight.w300,
-                                      fontSize: 18.sp,
-                                      color: AppColors.hintTextColor,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                TextFormField(
+                                  keyboardType: TextInputType.number,
+                                  inputFormatters: [
+                                    FilteringTextInputFormatter.digitsOnly,
+                                    LengthLimitingTextInputFormatter(6),
+                                    ExpiryDateInputFormatter(),
+                                  ],
+                                  controller: con.expiryDateController,
+                                  onChanged: (val) {
+                                    con.expiryDate.value = val;
+                                    if (val.length == 5) {
+                                      final parts = val.split('/');
+                                      if (parts.length == 2) {
+                                        final year = int.tryParse(parts[1]);
+                                        if (year != null) {
+                                          final currentYear =
+                                              DateTime.now().year % 100;
+                                          if (year > currentYear + 10) {
+                                            con.expiryDateError.value =
+                                                'Year is too far';
+                                          } else {
+                                            con.expiryDateError.value = '';
+                                          }
+                                        }
+                                      }
+                                    } else {
+                                      con.expiryDateError.value = '';
+                                    }
+                                  },
+                                  decoration: InputDecoration(
+                                    filled: true,
+                                    fillColor: AppColors.tfbgcolor,
+                                    contentPadding: EdgeInsets.symmetric(
+                                      horizontal: 18.w,
+                                      vertical: 10.h,
                                     ),
-                              ),
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(8.r),
+                                      borderSide: BorderSide.none,
+                                    ),
+                                    hintText: 'MM / YY',
+                                    hintStyle: Theme.of(context)
+                                        .textTheme
+                                        .titleSmall
+                                        ?.copyWith(
+                                          fontWeight: FontWeight.w300,
+                                          fontSize: 17.sp,
+                                          color: AppColors.hintTextColor,
+                                        ),
+                                  ),
+                                ),
+                                con.expiryDateError.value.isNotEmpty
+                                    ? Padding(
+                                        padding: const EdgeInsets.only(
+                                          left: 8.0,
+                                          top: 4.0,
+                                        ),
+                                        child: Text(
+                                          con.expiryDateError.value,
+                                          style:
+                                              AppTextStyle.textFieldStyle(
+                                                context,
+                                              )?.copyWith(
+                                                color: AppColors.redColor,
+                                                fontSize: 10.sp,
+                                                fontWeight: FontWeight.w400,
+                                              ),
+                                        ),
+                                      )
+                                    : SizedBox.shrink(),
+                              ],
                             ),
                           ),
 
                           20.horizontalSpace,
 
                           Expanded(
-                            child: TextFormField(
-                              keyboardType: TextInputType.number,
-                              inputFormatters: [
-                                FilteringTextInputFormatter.digitsOnly,
-                                LengthLimitingTextInputFormatter(3),
-                              ],
-                              decoration: InputDecoration(
-                                filled: true,
-                                fillColor: AppColors.tfbgcolor,
-                                contentPadding: EdgeInsets.symmetric(
-                                  horizontal: 18.w,
-                                  vertical: 10.h,
-                                ),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(8.r),
-                                  borderSide: BorderSide.none,
-                                ),
-                                hintText: '3 digits',
-                                hintStyle: Theme.of(context)
-                                    .textTheme
-                                    .titleSmall
-                                    ?.copyWith(
-                                      fontWeight: FontWeight.w300,
-                                      fontSize: 18.sp,
-                                      color: AppColors.hintTextColor,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                TextFormField(
+                                  keyboardType: TextInputType.number,
+                                  inputFormatters: [
+                                    FilteringTextInputFormatter.digitsOnly,
+                                    LengthLimitingTextInputFormatter(3),
+                                  ],
+                                  controller: con.cvvController,
+                                  onChanged: (val) => con.cvv.value = val,
+                                  decoration: InputDecoration(
+                                    filled: true,
+                                    fillColor: AppColors.tfbgcolor,
+                                    contentPadding: EdgeInsets.symmetric(
+                                      horizontal: 18.w,
+                                      vertical: 10.h,
                                     ),
-                              ),
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(8.r),
+                                      borderSide: BorderSide.none,
+                                    ),
+                                    hintText: '3 digits',
+                                    hintStyle: Theme.of(context)
+                                        .textTheme
+                                        .titleSmall
+                                        ?.copyWith(
+                                          fontWeight: FontWeight.w300,
+                                          fontSize: 17.sp,
+                                          color: AppColors.hintTextColor,
+                                        ),
+                                  ),
+                                ),
+                                con.cvvError.value.isNotEmpty
+                                    ? Padding(
+                                        padding: const EdgeInsets.only(
+                                          left: 8.0,
+                                          top: 4.0,
+                                        ),
+                                        child: Text(
+                                          con.cvvError.value,
+                                          style:
+                                              AppTextStyle.textFieldStyle(
+                                                context,
+                                              )?.copyWith(
+                                                color: AppColors.redColor,
+                                                fontSize: 10.sp,
+                                                fontWeight: FontWeight.w400,
+                                              ),
+                                          textAlign: TextAlign.start,
+                                        ),
+                                      )
+                                    : SizedBox.shrink(),
+                              ],
                             ),
                           ),
                         ],
@@ -323,7 +433,7 @@ class CheckoutScreen extends StatelessWidget {
               30.verticalSpace,
 
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 30.w),
+                padding: EdgeInsets.symmetric(horizontal: 35.w),
                 child: AppButton(
                   text: 'Complete Payment',
                   textStyle: Theme.of(context).textTheme.titleSmall?.copyWith(
@@ -334,7 +444,7 @@ class CheckoutScreen extends StatelessWidget {
                   width: Get.width,
                   height: 60.h,
                   onPressed: () {
-                    Get.back();
+                    con.validate();
                   },
                   color: AppColors.kPrimaryColor,
                   borderRadius: defaultRadius,

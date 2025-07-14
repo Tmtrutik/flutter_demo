@@ -115,7 +115,7 @@ class HomeScreen extends StatelessWidget {
                   child: Column(
                     children: [
                       25.verticalSpace,
-              
+
                       SizedBox(
                         height: 25.h,
                         child: ListView.separated(
@@ -163,9 +163,9 @@ class HomeScreen extends StatelessWidget {
                           },
                         ),
                       ),
-              
+
                       18.verticalSpace,
-              
+
                       SizedBox(
                         height: 160.h,
                         child: ListView.separated(
@@ -183,9 +183,9 @@ class HomeScreen extends StatelessWidget {
                           },
                         ),
                       ),
-              
+
                       15.verticalSpace,
-              
+
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -209,9 +209,9 @@ class HomeScreen extends StatelessWidget {
                           ),
                         ],
                       ),
-              
+
                       15.verticalSpace,
-              
+
                       SingleChildScrollView(
                         scrollDirection: Axis.horizontal,
                         child: Row(
@@ -221,9 +221,9 @@ class HomeScreen extends StatelessWidget {
                               width: 280.w,
                               child: FeatureCard(),
                             ),
-              
+
                             15.horizontalSpace,
-              
+
                             SizedBox(
                               height: 140.h,
                               width: 280.w,
@@ -232,7 +232,7 @@ class HomeScreen extends StatelessWidget {
                           ],
                         ),
                       ),
-              
+
                       25.verticalSpace,
                     ],
                   ),
