@@ -3,27 +3,26 @@ import 'package:flutter_demo/res/app_button.dart';
 import 'package:flutter_demo/res/app_colors.dart';
 import 'package:flutter_demo/res/app_icon_button.dart';
 import 'package:flutter_demo/utils/app_assets.dart';
+import 'package:flutter_demo/utils/color_print.dart';
 import 'package:flutter_demo/utils/routes/app_routes.dart';
 import 'package:flutter_demo/utils/utils.dart';
 import 'package:flutter_demo/views/cart/cart_controller.dart';
+import 'package:flutter_demo/views/cart/components/confirm_clear_dialog.dart';
 import 'package:flutter_demo/views/cart/components/product_tile.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:flutter_demo/views/cart/components/confirm_clear_dialog.dart';
 
 class CartScreen extends StatelessWidget {
   CartScreen({super.key});
 
-  final CartController con = Get.put(CartController());
+  final CartController con = Get.put(CartController(), permanent: true);
 
   @override
   Widget build(BuildContext context) {
+    printWhite(con.cartProducts.toString());
     return Scaffold(
       appBar: AppBar(
-        scrolledUnderElevation: 0.0,
-        automaticallyImplyLeading: false,
-
         // leading
         leading: AppIconButton(
           onPressed: () {
@@ -35,10 +34,7 @@ class CartScreen extends StatelessWidget {
         // title
         title: Text(
           'Shopping Cart',
-          style: Theme.of(context).textTheme.titleSmall?.copyWith(
-            fontWeight: FontWeight.w700,
-            fontSize: 16.sp,
-          ),
+          style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700, fontSize: 16.sp),
         ),
         centerTitle: true,
 
@@ -79,19 +75,18 @@ class CartScreen extends StatelessWidget {
                     child: Obx(
                       () => ListView.separated(
                         shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
-                        itemCount: con.cartItems.length,
-                        separatorBuilder: (context, index) =>
-                            SizedBox(height: 30),
+                        physics: AlwaysScrollableScrollPhysics(),
+                        itemCount: con.cartProducts.length,
+                        separatorBuilder: (context, index) => SizedBox(height: 30),
                         itemBuilder: (context, index) {
-                          final item = con.cartItems[index];
+                          final product = con.cartProducts[index];
                           return ProductTile(
-                            image: item['image'],
-                            title: item['title'],
-                            price: item['unitPrice'] * item['quantity'],
-                            rating: item['rating'],
-                            reviews: item['reviews'],
-                            quantity: item['quantity'],
+                            image: product.image ?? '',
+                            title: product.name ?? '',
+                            price: int.tryParse(product.price ?? '0') ?? 0,
+                            rating: double.tryParse(product.rating ?? '0') ?? 0,
+                            reviews: '',
+                            quantity: product.quantity ?? 1,
                             onIncrement: () => con.incrementQuantity(index),
                             onDecrement: () => con.decrementQuantity(index),
                             onRemove: () => con.removeItem(index),
@@ -109,7 +104,9 @@ class CartScreen extends StatelessWidget {
             () => Container(
               decoration: BoxDecoration(
                 color: AppColors.backgroundgrey,
-                borderRadius: BorderRadius.vertical(top: Radius.circular(30.r)),
+                borderRadius: BorderRadius.vertical(
+                  top: Radius.circular(30.r),
+                ),
               ),
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: defaultPadding),
@@ -121,9 +118,8 @@ class CartScreen extends StatelessWidget {
                       children: [
                         24.horizontalSpace,
                         Text(
-                          'Total: ${con.cartItems.fold(0, (sum, item) => sum + (item['quantity'] as int))} items',
-                          style: Theme.of(context).textTheme.titleSmall
-                              ?.copyWith(
+                          'Total: ${con.totalItems} items',
+                          style: Theme.of(context).textTheme.titleSmall?.copyWith(
                                 fontWeight: FontWeight.w700,
                                 fontSize: 12.sp,
                                 color: AppColors.greyColor,
@@ -132,8 +128,7 @@ class CartScreen extends StatelessWidget {
                         Spacer(),
                         Text(
                           'USD ${con.totalPrice.toString()}',
-                          style: Theme.of(context).textTheme.titleSmall
-                              ?.copyWith(
+                          style: Theme.of(context).textTheme.titleSmall?.copyWith(
                                 fontWeight: FontWeight.w700,
                                 fontSize: 16.sp,
                               ),

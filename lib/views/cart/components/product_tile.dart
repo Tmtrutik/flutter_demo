@@ -7,27 +7,27 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class ProductTile extends StatelessWidget {
-  final String title;
-  final int price;
-  final double rating;
-  final String reviews;
-  final String image;
-  final int quantity;
-  final VoidCallback onIncrement;
-  final VoidCallback onDecrement;
-  final VoidCallback onRemove;
+  final String? title;
+  final int? price;
+  final double? rating;
+  final String? reviews;
+  final String? image;
+  final int? quantity;
+  final VoidCallback? onIncrement;
+  final VoidCallback? onDecrement;
+  final VoidCallback? onRemove;
 
   const ProductTile({
     super.key,
-    required this.title,
-    required this.price,
-    required this.rating,
-    required this.reviews,
-    required this.image,
-    required this.quantity,
-    required this.onIncrement,
-    required this.onDecrement,
-    required this.onRemove,
+    this.title,
+    this.price,
+    this.rating,
+    this.reviews,
+    this.image,
+    this.quantity,
+    this.onIncrement,
+    this.onDecrement,
+    this.onRemove,
   });
 
   @override
@@ -38,8 +38,8 @@ class ProductTile extends StatelessWidget {
           // Product image
           ClipRRect(
             borderRadius: BorderRadius.circular(15.r),
-            child: Image.asset(
-              image,
+            child: Image.network(
+              image ?? '',
               fit: BoxFit.cover,
               width: 120.w,
               height: 125.w,
@@ -54,20 +54,20 @@ class ProductTile extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  title,
+                  title ?? '',
                   style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                    fontWeight: FontWeight.w300,
-                    fontSize: 18.sp,
-                  ),
+                        fontWeight: FontWeight.w300,
+                        fontSize: 18.sp,
+                      ),
                 ),
                 Text(
-                    "\$$price",
-                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      fontWeight: FontWeight.w700,
-                      fontSize: 16.sp,
-                      fontFamily: AppTheme.fontFamilyDmsans,
-                    ),
-                  ),
+                  "\$${price ?? '0'}",
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        fontWeight: FontWeight.w700,
+                        fontSize: 16.sp,
+                        fontFamily: AppTheme.fontFamilyDmsans,
+                      ),
+                ),
                 5.verticalSpace,
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -91,8 +91,7 @@ class ProductTile extends StatelessWidget {
                             child: Text(
                               quantity.toString(),
                               textAlign: TextAlign.center,
-                              style: Theme.of(context).textTheme.titleMedium
-                                  ?.copyWith(
+                              style: Theme.of(context).textTheme.titleMedium?.copyWith(
                                     fontWeight: FontWeight.w400,
                                     fontSize: 14.sp,
                                   ),
@@ -136,31 +135,24 @@ class ProductTile extends StatelessWidget {
                           height: 7.h,
                           width: 7.w,
                         ),
-
                         3.horizontalSpace,
-
                         Text(
                           rating.toString(),
-                          style: Theme.of(context).textTheme.titleMedium
-                              ?.copyWith(
+                          style: Theme.of(context).textTheme.titleMedium?.copyWith(
                                 fontWeight: FontWeight.w400,
                                 fontSize: 14.sp,
                               ),
                         ),
-
                         15.horizontalSpace,
-
                         Text(
-                          reviews,
-                          style: Theme.of(context).textTheme.titleMedium
-                              ?.copyWith(
+                          reviews ?? '',
+                          style: Theme.of(context).textTheme.titleMedium?.copyWith(
                                 fontWeight: FontWeight.w400,
                                 fontSize: 14.sp,
                               ),
                         ),
                       ],
                     ),
-
                     InkWell(
                       onTap: () {},
                       borderRadius: BorderRadius.circular(defaultRadius),

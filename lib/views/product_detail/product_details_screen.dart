@@ -5,6 +5,7 @@ import 'package:flutter_demo/res/app_icon_button.dart';
 import 'package:flutter_demo/utils/app_assets.dart';
 import 'package:flutter_demo/utils/routes/app_routes.dart';
 import 'package:flutter_demo/utils/utils.dart';
+import 'package:flutter_demo/views/cart/cart_controller.dart';
 import 'package:flutter_demo/views/product_detail/product_details_controller.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -109,7 +110,9 @@ class ProductDetailsScreen extends StatelessWidget {
       bottomNavigationBar: AppButton(
         text: 'Add To Cart',
         onPressed: () {
-          Get.toNamed(AppRoutes.cartScreen, arguments: {'products': con.product});
+          final cartController = Get.find<CartController>();
+          cartController.addToCart(con.product);
+          Get.toNamed(AppRoutes.cartScreen);
         },
         color: AppColors.kPrimaryColor,
       ).paddingOnly(bottom: defaultPadding * 2, right: defaultPadding, left: defaultPadding),
